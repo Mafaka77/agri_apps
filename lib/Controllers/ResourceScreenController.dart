@@ -2,6 +2,7 @@ import 'package:agri_farmers_app/Data/ResourceQuery.dart';
 import 'package:agri_farmers_app/Models/FarmEquipmentModel.dart';
 import 'package:agri_farmers_app/Models/IrrigationInfrastructure.dart';
 import 'package:agri_farmers_app/Models/KharifCropModel.dart';
+import 'package:agri_farmers_app/Models/LandCrops.dart';
 import 'package:agri_farmers_app/Models/OwnershipTypeModel.dart';
 import 'package:agri_farmers_app/Models/RabiCropModel.dart';
 import 'package:agri_farmers_app/Models/RdBlockModel.dart';
@@ -52,6 +53,7 @@ class ResourceScreenController extends GetxController {
     getAllRabiCrops();
     getAllScheme();
     getHorticultureData();
+    getLandCrops();
     super.onInit();
   }
 
@@ -202,6 +204,15 @@ class ResourceScreenController extends GetxController {
     for (var data in greenHouse) {
       var greenHouse = GreenHouseModel(id: data['id'], name: data['name']);
       await resourceServices.saveGreenHouse(greenHouse);
+    }
+  }
+
+  getLandCrops() async {
+    var res = await resourceServices.getLandCrops();
+    var landCrops = res['crops'];
+    for (var land in landCrops) {
+      var data = LandCrops(id: land['id'], crop_name: land['crop_name']);
+      await resourceServices.saveLandCrop(data);
     }
   }
 }

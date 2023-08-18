@@ -3,6 +3,7 @@ import 'package:agri_farmers_app/Models/FarmEquipmentModel.dart';
 import 'package:agri_farmers_app/Models/GreenHouseModel.dart';
 import 'package:agri_farmers_app/Models/IrrigationInfrastructure.dart';
 import 'package:agri_farmers_app/Models/KharifCropModel.dart';
+import 'package:agri_farmers_app/Models/LandCrops.dart';
 import 'package:agri_farmers_app/Models/LandHoldingModel.dart';
 import 'package:agri_farmers_app/Models/OrchardModel.dart';
 import 'package:agri_farmers_app/Models/OwnershipTypeModel.dart';
@@ -212,5 +213,17 @@ class ResourceServices extends BaseService {
   saveGreenHouse(GreenHouseModel greenHouseModel) async {
     return await repository.insertData(
         'green_house_plants', greenHouseModel.toMap());
+  }
+
+  //LAND WATER CROPS
+  Future getLandCrops() async {
+    try {
+      var response = await client.get(Routes.GET_LAND_CROPS);
+      return response.data;
+    } catch (ex) {}
+  }
+
+  saveLandCrop(LandCrops landCrops) async {
+    return await repository.insertData('land_crops', landCrops.toMap());
   }
 }

@@ -2,6 +2,7 @@ import 'package:agri_farmers_app/Models/AgricultureFarmModel.dart';
 import 'package:agri_farmers_app/Models/FarmerAdditionalDetailModel.dart';
 import 'package:agri_farmers_app/Models/FarmerModel.dart';
 import 'package:agri_farmers_app/Models/HorticultureModel.dart';
+import 'package:agri_farmers_app/Models/LandWaterModel.dart';
 import 'package:agri_farmers_app/Services/OnlineHomeScreenServices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -18,6 +19,7 @@ class OnlineHomeController extends GetxController {
   var farmerAgriLandList = <AgricultureLandModel>[].obs;
   var additionalDetails = <FarmerAdditionalDetailModel>[].obs;
   var horticultureList = <HorticultureModel>[].obs;
+  var landWaterList = <LandWaterModel>[].obs;
 
   var isDataLoading = false.obs;
   var farmerOffset = 0.obs;
@@ -87,6 +89,7 @@ class OnlineHomeController extends GetxController {
       var additional =
           FarmerAdditionalDetailModel.fromJsonList(data['additional']);
       var horticulture = HorticultureModel.fromJsonList(data['horticulture']);
+      var landWater = LandWaterModel.fromJsonList(data['landWater']);
 
       additionalDetails.clear();
       additionalDetails.addAll(additional);
@@ -94,7 +97,8 @@ class OnlineHomeController extends GetxController {
       farmerAgriLandList.addAll(farm);
       horticultureList.clear();
       horticultureList.addAll(horticulture);
-
+      landWaterList.clear();
+      landWaterList.addAll(landWater);
       onSuccess();
     } catch (ex) {
       onError();

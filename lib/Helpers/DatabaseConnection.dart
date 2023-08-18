@@ -2,6 +2,7 @@ import 'package:agri_farmers_app/Data/AgriLandData.dart';
 import 'package:agri_farmers_app/Data/Caste.dart';
 import 'package:agri_farmers_app/Data/District.dart';
 import 'package:agri_farmers_app/Data/HorticultureQuery.dart';
+import 'package:agri_farmers_app/Data/LandWaterData.dart';
 import 'package:agri_farmers_app/Data/ResourceQuery.dart';
 import 'package:agri_farmers_app/Data/GenderData.dart';
 import 'package:agri_farmers_app/Data/Scheme.dart';
@@ -37,5 +38,6 @@ class DatabaseConnection {
     await database.execute(HorticultureQuery().plantationQuery);
     await database.execute(HorticultureQuery().orchardsTable);
     await database.execute(HorticultureQuery().greenHousePlantQuery);
+    await database.execute(LandWaterData().landCropsTable);
   }
 }

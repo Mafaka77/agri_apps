@@ -3,6 +3,7 @@ import 'package:agri_farmers_app/Services/BasicInfoServices.dart';
 import 'package:agri_farmers_app/Services/FarmLandServices.dart';
 import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
 import 'package:agri_farmers_app/Services/HorticultureScreenServices.dart';
+import 'package:agri_farmers_app/Services/LandWaterScreenServices.dart';
 import 'package:agri_farmers_app/Services/LoginServices.dart';
 import 'package:agri_farmers_app/Services/OnlineHomeScreenServices.dart';
 import 'package:agri_farmers_app/Services/ResourceServices.dart';
@@ -24,6 +25,7 @@ void main() async {
   Get.put(OnlineHomeScreenServices(), tag: 'onlineHomeServices');
   Get.put(AdditionalScreenServices(), tag: 'additionalScreenServices');
   Get.put(HorticultureScreenServices(), tag: 'horticultureServices');
+  Get.put(LandWaterScreenServices(), tag: 'landWaterScreenServices');
 
   const storage = FlutterSecureStorage();
   myStorage = await storage.read(key: 'token');

@@ -1,6 +1,6 @@
 class Routes {
   // static String BASE_URL = 'http://192.168.29.6:8000/api/';
-  static String BASE_URL = 'http://10.180.243.106:8000/api/';
+  static String BASE_URL = 'http://10.180.243.103:8000/api/';
 
   //LOGIN
   static String LOGIN = '${BASE_URL}login';
@@ -21,6 +21,7 @@ class Routes {
   static String GET_ALL_RABI_CROPS = '${BASE_URL}get-all-rabi-crops';
   static String GET_ALL_SCHEME = '${BASE_URL}get-all-scheme';
   static String GET_HORTICULTURE_DATA = '${BASE_URL}get-horticulture-data';
+  static String GET_LAND_CROPS = '${BASE_URL}get-land-crops';
 
   //ONLINE DATA
   static String GET_ALL_FARMERS(id) => '${BASE_URL}get-all-farmers/$id';
@@ -60,4 +61,9 @@ class Routes {
       '${BASE_URL}update-horticulture-details/$id';
   static String DELETE_HORTICULTURE(id) =>
       '${BASE_URL}delete-horticulture-details/$id';
+
+  //LAND WATER CONSERVATOIN
+  static String SUBMIT_LAND_WATER = '${BASE_URL}submit-land-water';
+  static String GET_LAND_WATER(id) => '${BASE_URL}get-land-water/$id';
+  static String UPDATE_LAND_WATER(id) => '${BASE_URL}update-land-water/$id';
 }

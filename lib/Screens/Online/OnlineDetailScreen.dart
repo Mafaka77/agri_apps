@@ -1,11 +1,13 @@
 import 'package:agri_farmers_app/Controllers/AdditionalScreenController.dart';
 import 'package:agri_farmers_app/Controllers/BasicInfoController.dart';
 import 'package:agri_farmers_app/Controllers/HorticultureScreenController.dart';
+import 'package:agri_farmers_app/Controllers/LandWaterScreenController.dart';
 import 'package:agri_farmers_app/Controllers/OnlineHomeController.dart';
 import 'package:agri_farmers_app/MyColors.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddAdditionalScreen.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddFarmScreen.dart';
+import 'package:agri_farmers_app/Screens/Online/OnlineAddLandWaterScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
@@ -191,6 +193,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
                       child: ListTile(
+                        dense: true,
                         onTap: () {
                           Get.lazyPut(() => AdditionalScreenController());
                           AdditionalScreenController
@@ -259,6 +262,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
                       child: ListTile(
+                          dense: true,
                           onTap: () {
                             Get.lazyPut(() => HorticultureScreenController());
                             HorticultureScreenController
@@ -302,10 +306,62 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 elevation: 0,
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(color: MyColors.deepGreen)),
-                onPressed: () {},
+                onPressed: () {
+                  Get.delete<LandWaterScreenController>();
+                  Get.to(() => OnlineAddLandWaterScreen(),
+                      arguments: [data.id]);
+                },
                 child: Text(
                   'ADD LAND RESOURCE AND WATER CONSERVATION',
                   style: TextStyle(fontSize: 13, color: MyColors.deepGreen),
+                ),
+              ),
+              Obx(
+                () => ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.landWaterList.length,
+                  itemBuilder: (c, i) {
+                    var data = controller.landWaterList[i];
+                    return Card(
+                      elevation: 0,
+                      color: const Color(0xfff1f1f1),
+                      child: ListTile(
+                          dense: true,
+                          onTap: () {
+                            Get.lazyPut(() => LandWaterScreenController());
+                            LandWaterScreenController
+                                landWaterScreenController = Get.find();
+                            landWaterScreenController.isEdit.value = true;
+                            landWaterScreenController.getLandWaterData(data.id!,
+                                () {
+                              reusableWidget.loader(context);
+                            }, () {
+                              Loader.hide();
+                              Get.to(() => OnlineAddLandWaterScreen(),
+                                  arguments: [data.farmers_id]);
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Error Occured! Try Again',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ));
+                            });
+                          },
+                          leading: Text(data.location.toString()),
+                          trailing: IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              // openHorticultureDeleteDialog(data.id!, context);
+                            },
+                          )),
+                    );
+                  },
                 ),
               ),
               MaterialButton(
