@@ -1,13 +1,19 @@
 import 'package:agri_farmers_app/Controllers/AdditionalScreenController.dart';
+import 'package:agri_farmers_app/Controllers/AnimalHusbandryController.dart';
 import 'package:agri_farmers_app/Controllers/BasicInfoController.dart';
+import 'package:agri_farmers_app/Controllers/FIsheriesScreenController.dart';
 import 'package:agri_farmers_app/Controllers/HorticultureScreenController.dart';
 import 'package:agri_farmers_app/Controllers/LandWaterScreenController.dart';
 import 'package:agri_farmers_app/Controllers/OnlineHomeController.dart';
+import 'package:agri_farmers_app/Controllers/SericultureScreenController.dart';
 import 'package:agri_farmers_app/MyColors.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddAdditionalScreen.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddFarmScreen.dart';
+import 'package:agri_farmers_app/Screens/Online/OnlineAddFisherieScreen.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddLandWaterScreen.dart';
+import 'package:agri_farmers_app/Screens/Online/OnlineAddSericultureScreen.dart';
+import 'package:agri_farmers_app/Screens/Online/OnlineAnimalHusbandryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
@@ -85,16 +91,18 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                     ),
                   ],
                 ),
-                trailing: IconButton(
-                  onPressed: () {
-                    Get.lazyPut(() => BasicInfoController());
-                    openDeleteDialog(data.id, context);
-                  },
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                ),
+                trailing: data.verification == 'Submitted'
+                    ? null
+                    : IconButton(
+                        onPressed: () {
+                          Get.lazyPut(() => BasicInfoController());
+                          openDeleteDialog(data.id, context);
+                        },
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
               ),
               Divider(
                 color: MyColors.deepGreen,
@@ -124,12 +132,12 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: homeController.farmerAgriLandList.length,
                     itemBuilder: (c, i) {
-                      var data = homeController.farmerAgriLandList[i];
+                      var d = homeController.farmerAgriLandList[i];
                       return ListTile(
                         onTap: () {
                           Get.lazyPut(() => FarmLandController());
                           FarmLandController farmLandController = Get.find();
-                          farmLandController.getFarmerAgriLand(data.id!.toInt(),
+                          farmLandController.getFarmerAgriLand(d.id!.toInt(),
                               () {
                             reusableWidget.loader(context);
                           }, () {
@@ -143,22 +151,24 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                         dense: true,
                         leading: const Icon(Icons.person),
                         title: Text(
-                          data.land_owner_name.toString(),
+                          d.land_owner_name.toString(),
                           style: const TextStyle(fontSize: 13),
                         ),
                         subtitle: Text(
-                          data.district!.district_name.toString(),
+                          d.district!.district_name.toString(),
                           style: const TextStyle(fontSize: 11),
                         ),
-                        trailing: IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          onPressed: () {
-                            openAgriDeleteDialog(data.id!, context);
-                          },
-                        ),
+                        trailing: data.verification == 'Submitted'
+                            ? null
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  openAgriDeleteDialog(data.id!, context);
+                                },
+                              ),
                       );
                     }),
               ),
@@ -184,11 +194,12 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
               ),
               Obx(
                 () => ListView.builder(
+                  padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.additionalDetails.length,
                   itemBuilder: (c, i) {
-                    var data = controller.additionalDetails[i];
+                    var d = controller.additionalDetails[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -198,8 +209,8 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Get.lazyPut(() => AdditionalScreenController());
                           AdditionalScreenController
                               additionalScreenController = Get.find();
-                          additionalScreenController
-                              .getAdditionalDetails(data.id!, () {
+                          additionalScreenController.getAdditionalDetails(d.id!,
+                              () {
                             reusableWidget.loader(context);
                           }, () {
                             Loader.hide();
@@ -211,18 +222,20 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                         },
                         leading: const Icon(Icons.person),
                         title: Text(
-                          data.ration_card_number.toString(),
+                          d.ration_card_number.toString(),
                           style: const TextStyle(fontSize: 13),
                         ),
-                        trailing: IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          onPressed: () {
-                            openAdditionalDeleteDialog(data.id!, context);
-                          },
-                        ),
+                        trailing: data.verification == 'Submitted'
+                            ? null
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  openAdditionalDeleteDialog(data.id!, context);
+                                },
+                              ),
                       ),
                     );
                   },
@@ -253,6 +266,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
               ),
               Obx(
                 () => ListView.builder(
+                  padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.horticultureList.length,
@@ -318,6 +332,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
               ),
               Obx(
                 () => ListView.builder(
+                  padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.landWaterList.length,
@@ -368,33 +383,216 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(color: MyColors.deepGreen)),
                 elevation: 0,
-                onPressed: () {},
+                onPressed: () {
+                  Get.delete<FisheriesScreenController>();
+                  Get.to(() => OnlineAddFisherieScreen(), arguments: [data.id]);
+                },
                 child: Text(
                   'ADD FISH POND',
                   style: TextStyle(fontSize: 13, color: MyColors.deepGreen),
                 ),
               ),
+              Obx(
+                () => ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: controller.fisherieList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (c, i) {
+                    var data = controller.fisherieList[i];
+                    return Card(
+                      elevation: 0,
+                      color: const Color(0xfff1f1f1),
+                      child: ListTile(
+                          dense: true,
+                          onTap: () {
+                            Get.lazyPut(() => FisheriesScreenController());
+                            FisheriesScreenController
+                                fisheriesScreenController = Get.find();
+                            fisheriesScreenController.isEdit.value = true;
+                            fisheriesScreenController.getFisherieData(data.id!,
+                                () {
+                              reusableWidget.loader(context);
+                            }, () {
+                              Loader.hide();
+                              Get.to(() => OnlineAddFisherieScreen(),
+                                  arguments: [data.farmers_id]);
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Error Occured! Try Again',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ));
+                            });
+                          },
+                          leading: Text(data.location.toString()),
+                          trailing: IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              openFisheriesDeleteDialog(data.id!, context);
+                            },
+                          )),
+                    );
+                  },
+                ),
+              ),
               MaterialButton(
                 elevation: 0,
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(color: MyColors.deepGreen)),
-                onPressed: () {},
+                onPressed: () {
+                  Get.delete<AnimalHusbandryController>();
+                  Get.to(() => OnlineAnimalHusbandryScreen(),
+                      arguments: [data.id]);
+                },
                 child: Text(
                   'ANIMAL HUSBANDRY',
                   style: TextStyle(fontSize: 13, color: MyColors.deepGreen),
                 ),
               ),
+              Obx(
+                () => ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: controller.husbandryList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (c, i) {
+                    var data = controller.husbandryList[i];
+                    return Card(
+                      elevation: 0,
+                      color: const Color(0xfff1f1f1),
+                      child: ListTile(
+                          dense: true,
+                          onTap: () {
+                            Get.lazyPut(() => AnimalHusbandryController());
+                            AnimalHusbandryController
+                                animalHusbandryController = Get.find();
+                            animalHusbandryController.isEdit.value = true;
+                            animalHusbandryController
+                                .getAnimalHusbandry(data.id!, () {
+                              reusableWidget.loader(context);
+                            }, () {
+                              Loader.hide();
+                              Get.to(() => OnlineAnimalHusbandryScreen(),
+                                  arguments: [data.farmers_id]);
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Error Occured! Try Again',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ));
+                            });
+                          },
+                          leading: Text(data.location.toString()),
+                          trailing: IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              openHusbandryDeleteDialog(data.id!, context);
+                            },
+                          )),
+                    );
+                  },
+                ),
+              ),
               MaterialButton(
                 elevation: 0,
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(color: MyColors.deepGreen)),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => OnlineAddSericultureScreen(),
+                      arguments: [data.id]);
+                },
                 child: Text(
                   'ADD SERICULTURE',
                   style: TextStyle(fontSize: 13, color: MyColors.deepGreen),
                 ),
               ),
+              Obx(
+                () => ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: controller.sericultureList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (c, i) {
+                    var data = controller.sericultureList[i];
+                    return Card(
+                      elevation: 0,
+                      color: const Color(0xfff1f1f1),
+                      child: ListTile(
+                          dense: true,
+                          onTap: () {
+                            Get.lazyPut(() => SericultureScreenController());
+                            SericultureScreenController
+                                sericultureScreenController = Get.find();
+                            sericultureScreenController.isEdit.value = true;
+                            sericultureScreenController.getSericulture(data.id!,
+                                () {
+                              reusableWidget.loader(context);
+                            }, () {
+                              Loader.hide();
+                              Get.to(() => OnlineAddSericultureScreen(),
+                                  arguments: [data.farmers_id]);
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Error Occured! Try Again',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ));
+                            });
+                          },
+                          leading: Text(data.location.toString()),
+                          trailing: IconButton(
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              openSericultureDeleteDialog(data.id!, context);
+                            },
+                          )),
+                    );
+                  },
+                ),
+              ),
               reusableWidget.textBoxSpace(),
+              reusableWidget.textBoxSpace(),
+              data.rejection_note != null
+                  ? SizedBox(
+                      width: Get.width,
+                      child: Card(
+                        color: const Color(0xfff1f1f1),
+                        elevation: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Rejection Note:',
+                                style:
+                                    TextStyle(fontSize: 11, color: Colors.red),
+                              ),
+                              Text(
+                                data.rejection_note.toString(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               reusableWidget.textBoxSpace(),
               Card(
                 color: const Color(0xfff1f1f1),
@@ -412,22 +610,15 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                         () => InkWell(
                           splashColor: Colors.green,
                           onTap: () {
-                            if (controller.verification.value == 'Pending') {
-                              controller.sendForApproval(data.id, () {
-                                reusableWidget.loader(context);
-                              }, () {
-                                Loader.hide();
-                              }, () {
-                                Loader.hide();
-                                reusableWidget.rawSnackBar(
-                                  'Error Occured!',
-                                  const Icon(
-                                    Icons.warning,
-                                    color: Colors.red,
-                                  ),
-                                );
-                              });
-                            }
+                            data.verification == 'Submitted' ||
+                                    data.verification == 'Approved'
+                                ? reusableWidget.rawSnackBar(
+                                    'Already Submitted',
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                    ))
+                                : openApprovalDialog(context);
                           },
                           child: Card(
                             elevation: 0,
@@ -463,6 +654,86 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
         ),
       ),
     );
+  }
+
+  openApprovalDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: const Text(
+              'Send for Approval?',
+              style: TextStyle(
+                fontSize: 13,
+              ),
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              MaterialButton(
+                elevation: 0,
+                textColor: Colors.white,
+                color: MyColors.deepGreen,
+                onPressed: () {
+                  if (controller.verification.value == 'Pending') {
+                    controller.sendForApproval(data.id, () {
+                      reusableWidget.loader(context);
+                    }, () {
+                      Loader.hide();
+                      reusableWidget.rawSnackBar(
+                        'Application send for Approval',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ),
+                      );
+                      Navigator.pop(context);
+                    }, () {
+                      Loader.hide();
+                      reusableWidget.rawSnackBar(
+                        'Error Occured!',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ),
+                      );
+                    });
+                  } else if (controller.verification.value == 'Rejected') {
+                    controller.sendForApproval(data.id, () {
+                      reusableWidget.loader(context);
+                    }, () {
+                      Loader.hide();
+                      reusableWidget.rawSnackBar(
+                        'Application send for Approval',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ),
+                      );
+                      homeController.getAllFarmers('');
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }, () {
+                      Loader.hide();
+                      reusableWidget.rawSnackBar(
+                        'Error Occured!',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ),
+                      );
+                    });
+                  }
+                },
+                child: const Text('Yes'),
+              )
+            ],
+          );
+        });
   }
 
   openDeleteDialog(int id, BuildContext context) {
@@ -608,6 +879,159 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   HorticultureScreenController horticultureScreenController =
                       Get.find();
                   horticultureScreenController.deleteHorticulture(id, () {
+                    reusableWidget.loader(context);
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Deleted successfully',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ));
+                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                      Navigator.pop(context);
+                    }, () {});
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Error Occured!!',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ));
+                  });
+                },
+                color: MyColors.deepGreen,
+                elevation: 0,
+                textColor: Colors.white,
+                child: const Text('Yes'),
+              ),
+            ],
+          );
+        });
+  }
+
+  openFisheriesDeleteDialog(int id, BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: const Text('Are you sure?'),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Get.lazyPut(() => FisheriesScreenController());
+                  FisheriesScreenController fisheriesScreenController =
+                      Get.find();
+                  fisheriesScreenController.deleteFisheries(id, () {
+                    reusableWidget.loader(context);
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Deleted successfully',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ));
+                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                      Navigator.pop(context);
+                    }, () {});
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Error Occured!!',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ));
+                  });
+                },
+                color: MyColors.deepGreen,
+                elevation: 0,
+                textColor: Colors.white,
+                child: const Text('Yes'),
+              ),
+            ],
+          );
+        });
+  }
+
+  openHusbandryDeleteDialog(int id, BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: const Text('Are you sure?'),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Get.lazyPut(() => AnimalHusbandryController());
+                  AnimalHusbandryController animalHusbandryController =
+                      Get.find();
+                  animalHusbandryController.deleteHusbandry(id, () {
+                    reusableWidget.loader(context);
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Deleted successfully',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ));
+                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                      Navigator.pop(context);
+                    }, () {});
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Error Occured!!',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ));
+                  });
+                },
+                color: MyColors.deepGreen,
+                elevation: 0,
+                textColor: Colors.white,
+                child: const Text('Yes'),
+              ),
+            ],
+          );
+        });
+  }
+
+  openSericultureDeleteDialog(int id, BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: const Text('Are you sure?'),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Get.lazyPut(() => SericultureScreenController());
+                  SericultureScreenController sericultureScreenController =
+                      Get.find();
+                  sericultureScreenController.deleteSericulture(id, () {
                     reusableWidget.loader(context);
                   }, () {
                     Loader.hide();

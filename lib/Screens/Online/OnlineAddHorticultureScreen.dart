@@ -38,6 +38,107 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                     color: Colors.white,
                   )),
             ),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    elevation: 0,
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(color: MyColors.deepGreen),
+                        borderRadius: BorderRadius.circular(20)),
+                    minWidth: Get.width * 0.4,
+                    onPressed: () {
+                      print(controller.greenHouse);
+                      // Get.back();
+                    },
+                    child: Text(
+                      'Back',
+                      style: TextStyle(color: MyColors.deepGreen),
+                    ),
+                  ),
+                  Obx(() => controller.isEdit.isTrue
+                      ? MaterialButton(
+                          elevation: 0,
+                          shape: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none),
+                          color: MyColors.deepGreen,
+                          minWidth: Get.width * 0.4,
+                          onPressed: () async {
+                            controller.updateHortiDetails(farmerId, () {
+                              reusableWidget.loader(context);
+                            }, () {
+                              Loader.hide();
+
+                              reusableWidget.rawSnackBar(
+                                  'Successfully Updated',
+                                  const Icon(
+                                    Icons.check,
+                                    color: Colors.blue,
+                                  ));
+                              homeController
+                                  .getFarmerFarmDetails(farmerId, () {}, () {
+                                homeController.checkStatus(farmerId);
+                                Navigator.pop(context);
+                              }, () {});
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Error Occured',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ));
+                            });
+                          },
+                          child: const Text(
+                            'Update',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : MaterialButton(
+                          elevation: 0,
+                          shape: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none),
+                          color: MyColors.deepGreen,
+                          minWidth: Get.width * 0.4,
+                          onPressed: () async {
+                            controller.submitHortiDetails(farmerId, () {
+                              reusableWidget.loader(context);
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Successfully Added',
+                                  const Icon(
+                                    Icons.check,
+                                    color: Colors.blue,
+                                  ));
+                              homeController
+                                  .getFarmerFarmDetails(farmerId, () {}, () {
+                                homeController.checkStatus(farmerId);
+                                Navigator.pop(context);
+                              }, () {});
+                            }, () {
+                              Loader.hide();
+                              reusableWidget.rawSnackBar(
+                                  'Error Occured',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ));
+                            });
+                          },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ))
+                ],
+              ),
+            ),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -264,105 +365,12 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MaterialButton(
-                            elevation: 0,
-                            shape: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: MyColors.deepGreen),
-                                borderRadius: BorderRadius.circular(20)),
-                            minWidth: Get.width * 0.4,
-                            onPressed: () {
-                              print(controller.greenHouse);
-                              // Get.back();
-                            },
-                            child: Text(
-                              'Back',
-                              style: TextStyle(color: MyColors.deepGreen),
-                            ),
-                          ),
-                          Obx(() => controller.isEdit.isTrue
-                              ? MaterialButton(
-                                  elevation: 0,
-                                  shape: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none),
-                                  color: MyColors.deepGreen,
-                                  minWidth: Get.width * 0.4,
-                                  onPressed: () async {
-                                    controller.updateHortiDetails(farmerId, () {
-                                      reusableWidget.loader(context);
-                                    }, () {
-                                      Loader.hide();
-
-                                      reusableWidget.rawSnackBar(
-                                          'Successfully Updated',
-                                          const Icon(
-                                            Icons.check,
-                                            color: Colors.blue,
-                                          ));
-                                      homeController.getFarmerFarmDetails(
-                                          farmerId, () {}, () {
-                                        homeController.checkStatus(farmerId);
-                                        Navigator.pop(context);
-                                      }, () {});
-                                    }, () {
-                                      Loader.hide();
-                                      reusableWidget.rawSnackBar(
-                                          'Error Occured',
-                                          const Icon(
-                                            Icons.warning,
-                                            color: Colors.red,
-                                          ));
-                                    });
-                                  },
-                                  child: const Text(
-                                    'Edit',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                )
-                              : MaterialButton(
-                                  elevation: 0,
-                                  shape: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: BorderSide.none),
-                                  color: MyColors.deepGreen,
-                                  minWidth: Get.width * 0.4,
-                                  onPressed: () async {
-                                    controller.submitHortiDetails(farmerId, () {
-                                      reusableWidget.loader(context);
-                                    }, () {
-                                      Loader.hide();
-                                      reusableWidget.rawSnackBar(
-                                          'Successfully Added',
-                                          const Icon(
-                                            Icons.check,
-                                            color: Colors.blue,
-                                          ));
-                                      homeController.getFarmerFarmDetails(
-                                          farmerId, () {}, () {
-                                        homeController.checkStatus(farmerId);
-                                        Navigator.pop(context);
-                                      }, () {});
-                                    }, () {
-                                      Loader.hide();
-                                      reusableWidget.rawSnackBar(
-                                          'Error Occured',
-                                          const Icon(
-                                            Icons.warning,
-                                            color: Colors.red,
-                                          ));
-                                    });
-                                  },
-                                  child: const Text(
-                                    'Submit',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))
-                        ],
-                      )
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
                     ],
                   ),
                 ),

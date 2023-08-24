@@ -1,6 +1,7 @@
 import 'package:agri_farmers_app/Controllers/OnlineHomeController.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddBasicInfoScreen.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -20,8 +21,11 @@ class OnlineDataWidget extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             floatingActionButton: MaterialButton(
+              minWidth: Get.width * 0.34,
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, top: 10, bottom: 10),
               shape: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(0),
                 borderSide: BorderSide(color: MyColors.deepGreen),
               ),
               elevation: 0,
@@ -30,7 +34,7 @@ class OnlineDataWidget extends StatelessWidget {
                 Get.to(() => OnlineAddBasicInfoScreen());
               },
               child: const Text(
-                'Add Farmers Online',
+                'Add Farmer',
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   color: Colors.white,
@@ -76,7 +80,7 @@ class OnlineDataWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: SizedBox(
-                    height: Get.height,
+                    height: Get.height * 0.7,
                     child: Column(
                       children: [
                         Row(
@@ -107,7 +111,9 @@ class OnlineDataWidget extends StatelessWidget {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showFilterBottomSheet(context, controller);
+                              },
                               icon: Icon(
                                 Icons.filter_alt,
                                 color: MyColors.deepGreen,
@@ -194,7 +200,8 @@ class OnlineDataWidget extends StatelessWidget {
                                                       ? const Color(0xffbdbdbd)
                                                       : data.verification ==
                                                               'Submitted'
-                                                          ? Colors.pinkAccent
+                                                          ? const Color(
+                                                              0xffcd9f27)
                                                           : data.verification ==
                                                                   'Approved'
                                                               ? const Color(
@@ -216,6 +223,128 @@ class OnlineDataWidget extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+          );
+        });
+  }
+
+  showFilterBottomSheet(BuildContext context, OnlineHomeController controller) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (c) {
+          return Container(
+            margin: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: MyColors.deepGreen,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Apply')),
+                  ],
+                ),
+                reusableWidget.textBoxSpace(),
+                reusableWidget.textBoxSpace(),
+                reusableWidget.textBoxSpace(),
+                Row(
+                  children: [
+                    Obx(
+                      () => controller.sortBy.isEmpty
+                          ? Container()
+                          : Chip(
+                              label: Text(controller.sortBy.value),
+                              onDeleted: () {
+                                controller.sortBy.value = '';
+                              },
+                            ),
+                    ),
+                    Obx(
+                      () => controller.filterBy.isEmpty
+                          ? Container()
+                          : Chip(
+                              label: Text(controller.filterBy.value),
+                              onDeleted: () {
+                                controller.filterBy.value = '';
+                              },
+                            ),
+                    ),
+                  ],
+                ),
+                Obx(
+                  () => DropdownSearch<String>(
+                    selectedItem: controller.sortBy.value,
+                    validator: (val) {
+                      if (val == null) {
+                        return 'Required field';
+                      }
+                      return null;
+                    },
+                    items: const [
+                      "Latest",
+                      "Oldest",
+                    ],
+                    dropdownDecoratorProps: DropDownDecoratorProps(
+                      baseStyle: reusableWidget.textBoxTextSyle(),
+                      dropdownSearchDecoration: InputDecoration(
+                        enabledBorder: reusableWidget.borderStyle(),
+                        focusedBorder: reusableWidget.borderStyle(),
+                        errorBorder: reusableWidget.errorBorderStyle(),
+                        contentPadding: const EdgeInsets.all(10),
+                        labelText: 'Sort By',
+                        labelStyle: reusableWidget.textBoxTextSyle(),
+                      ),
+                    ),
+                    onChanged: (val) {
+                      controller.sortBy.value = val.toString();
+                      controller.update();
+                    },
+                  ),
+                ),
+                reusableWidget.textBoxSpace(),
+                Obx(
+                  () => DropdownSearch<String>(
+                    selectedItem: controller.filterBy.value,
+                    validator: (val) {
+                      if (val == null) {
+                        return 'Required field';
+                      }
+                      return null;
+                    },
+                    items: const [
+                      "Pending",
+                      "Submitted",
+                      "Approved",
+                      "Rejected",
+                    ],
+                    dropdownDecoratorProps: DropDownDecoratorProps(
+                      baseStyle: reusableWidget.textBoxTextSyle(),
+                      dropdownSearchDecoration: InputDecoration(
+                        enabledBorder: reusableWidget.borderStyle(),
+                        focusedBorder: reusableWidget.borderStyle(),
+                        errorBorder: reusableWidget.errorBorderStyle(),
+                        contentPadding: const EdgeInsets.all(10),
+                        labelText: 'By Verification status',
+                        labelStyle: reusableWidget.textBoxTextSyle(),
+                      ),
+                    ),
+                    onChanged: (val) {
+                      controller.filterBy.value = val.toString();
+                      controller.update();
+                    },
+                  ),
+                ),
+                reusableWidget.textBoxSpace(),
+              ],
             ),
           );
         });

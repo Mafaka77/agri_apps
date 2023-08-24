@@ -18,6 +18,11 @@ class Repository {
     }
   }
 
+  deleteTable(table) async {
+    var connection = await database;
+    return await connection!.rawDelete("DELETE from $table");
+  }
+
   insertData(table, data) async {
     var connection = await database;
     return await connection?.insert(table, data);
@@ -31,6 +36,12 @@ class Repository {
   readDataById(table, itemId) async {
     var connection = await database;
     return await connection?.query(table, where: 'id=?', whereArgs: [itemId]);
+  }
+
+  getSubDivision(table, id) async {
+    var connection = await database;
+    return await connection
+        ?.query(table, where: 'district_id=?', whereArgs: [id]);
   }
 
   updateData(table, data) async {

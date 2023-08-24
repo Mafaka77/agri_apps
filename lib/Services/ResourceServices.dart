@@ -1,16 +1,23 @@
 import 'package:agri_farmers_app/BaseService.dart';
 import 'package:agri_farmers_app/Models/FarmEquipmentModel.dart';
+import 'package:agri_farmers_app/Models/FishModel.dart';
 import 'package:agri_farmers_app/Models/GreenHouseModel.dart';
 import 'package:agri_farmers_app/Models/IrrigationInfrastructure.dart';
 import 'package:agri_farmers_app/Models/KharifCropModel.dart';
 import 'package:agri_farmers_app/Models/LandCrops.dart';
 import 'package:agri_farmers_app/Models/LandHoldingModel.dart';
+import 'package:agri_farmers_app/Models/LivestockModel.dart';
 import 'package:agri_farmers_app/Models/OrchardModel.dart';
 import 'package:agri_farmers_app/Models/OwnershipTypeModel.dart';
 import 'package:agri_farmers_app/Models/PlantationModel.dart';
 import 'package:agri_farmers_app/Models/RabiCropModel.dart';
 import 'package:agri_farmers_app/Models/RdBlockModel.dart';
 import 'package:agri_farmers_app/Models/SchemeModel.dart';
+import 'package:agri_farmers_app/Models/SilkwormModel.dart';
+import 'package:agri_farmers_app/Models/TypeOfBreedModel.dart';
+import 'package:agri_farmers_app/Models/TypeOfFarmModel.dart';
+import 'package:agri_farmers_app/Models/TypeOfPoultryBreedModel.dart';
+import 'package:agri_farmers_app/Models/TypeOfPoultryFarmModel.dart';
 import 'package:agri_farmers_app/Models/VillageModel.dart';
 
 import '../Helpers/Repository.dart';
@@ -71,12 +78,44 @@ class ResourceServices extends BaseService {
   getAllCaste() async {
     return await repository.readData('castes');
   }
+
   //SUB DIVISION
+  //API CALLS
+
+  Future getAllResources() async {
+    try {
+      var response = await client.get(Routes.GET_ALL_RESOURCES);
+      return response.data;
+    } catch (ex) {
+      return Future.error(ex);
+    }
+  }
+
+  clearAllTable() async {
+    await repository.deleteTable('sub_divisions');
+    await repository.deleteTable('blocks');
+    await repository.deleteTable('villages');
+    await repository.deleteTable('land_holdings');
+    await repository.deleteTable('ownership_types');
+    await repository.deleteTable('irrigation_infrastructures');
+    await repository.deleteTable('farm_equipment');
+    await repository.deleteTable('kharif_crops');
+    await repository.deleteTable('rabi_crops');
+    await repository.deleteTable('schemes');
+    await repository.deleteTable('orchards');
+    await repository.deleteTable('plantations');
+    await repository.deleteTable('green_house_plants');
+    await repository.deleteTable('land_crops');
+  }
 
   getAllSubDivision() async {
-    var response = await client.get(Routes.GET_ALL_SUB_DIVISION);
-    var data = response.data;
-    return data;
+    try {
+      var response = await client.get(Routes.GET_ALL_SUB_DIVISION);
+      var data = response.data;
+      return data;
+    } catch (ex) {
+      return ex;
+    }
   }
 
   saveSubDivision(SubDivisionModel subDivisionModel) async {
@@ -225,5 +264,44 @@ class ResourceServices extends BaseService {
 
   saveLandCrop(LandCrops landCrops) async {
     return await repository.insertData('land_crops', landCrops.toMap());
+  }
+
+  //FIsh
+  saveFish(FishModel fishModel) async {
+    return await repository.insertData('fish', fishModel.toMap());
+  }
+
+  //LIVESTOCK
+  saveLivestock(LivestockModel livestockModel) async {
+    return await repository.insertData('livestocks', livestockModel.toMap());
+  }
+
+  //TYPE OF BREED
+  saveTypeOfBreed(TypeOfBreedModel typeOfBreedModel) async {
+    return await repository.insertData(
+        'type_of_breeds', typeOfBreedModel.toMap());
+  }
+
+  //TYPE OF FARM
+  saveTypeOfFarm(TypeOfFarmModel typeOfFarmModel) async {
+    return await repository.insertData(
+        'type_of_farms', typeOfFarmModel.toMap());
+  }
+
+  //TYPE OF POULTRY BREED
+  savePoultryBreed(TypeOfPoultryBreedModel typeOfPoultryBreedModel) async {
+    return await repository.insertData(
+        'type_of_poultry_breeds', typeOfPoultryBreedModel.toMap());
+  }
+
+  //TYPE OF POULTRY FARM
+  savePoultryFarm(TypeOfPoultryFarmModel typeOfPoultryFarmModel) async {
+    return await repository.insertData(
+        'type_of_poultry_farms', typeOfPoultryFarmModel.toMap());
+  }
+
+  //SILKWORM
+  saveSilkworm(SilkwormModel silkwormModel) async {
+    return await repository.insertData('silkworms', silkwormModel.toMap());
   }
 }

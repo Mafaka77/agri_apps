@@ -31,6 +31,117 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
               backgroundColor: MyColors.deepGreen,
               elevation: 0,
             ),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    elevation: 0,
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(color: MyColors.deepGreen),
+                        borderRadius: BorderRadius.circular(20)),
+                    minWidth: Get.width * 0.4,
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Back',
+                      style: TextStyle(color: MyColors.deepGreen),
+                    ),
+                  ),
+                  Obx(
+                    () => controller.isEdit.isTrue
+                        ? MaterialButton(
+                            elevation: 0,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none),
+                            color: MyColors.deepGreen,
+                            minWidth: Get.width * 0.4,
+                            onPressed: () async {
+                              if (controller.formKey.currentState!.validate()) {
+                                await controller.updateAdditionalDetails(
+                                    data.id, data.farmers_id, () {
+                                  reusableWidget.loader(context);
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                    'Additional Details Updated',
+                                    Icon(
+                                      Icons.check,
+                                      color: MyColors.deepGreen,
+                                    ),
+                                  );
+                                  homeController.getFarmerFarmDetails(
+                                      data.farmers_id, () {}, () {
+                                    homeController.checkStatus(data.farmers_id);
+                                    Navigator.pop(context);
+                                  }, () {});
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                    'Error!! Try Again',
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                });
+                              }
+                            },
+                            child: const Text(
+                              'Update',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : MaterialButton(
+                            elevation: 0,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none),
+                            color: MyColors.deepGreen,
+                            minWidth: Get.width * 0.4,
+                            onPressed: () async {
+                              if (controller.formKey.currentState!.validate()) {
+                                await controller.submitAddtionalDetails(data.id,
+                                    () {
+                                  reusableWidget.loader(context);
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                    'Additional Details Added',
+                                    Icon(
+                                      Icons.check,
+                                      color: MyColors.deepGreen,
+                                    ),
+                                  );
+                                  homeController
+                                      .getFarmerFarmDetails(data.id, () {}, () {
+                                    homeController.checkStatus(data.id);
+                                    Navigator.pop(context);
+                                  }, () {});
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                    'Error!! Try Again',
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                });
+                              }
+                            },
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
+            ),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -563,120 +674,14 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MaterialButton(
-                            elevation: 0,
-                            shape: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: MyColors.deepGreen),
-                                borderRadius: BorderRadius.circular(20)),
-                            minWidth: Get.width * 0.4,
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text(
-                              'Back',
-                              style: TextStyle(color: MyColors.deepGreen),
-                            ),
-                          ),
-                          Obx(
-                            () => controller.isEdit.isTrue
-                                ? MaterialButton(
-                                    elevation: 0,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none),
-                                    color: MyColors.deepGreen,
-                                    minWidth: Get.width * 0.4,
-                                    onPressed: () async {
-                                      if (controller.formKey.currentState!
-                                          .validate()) {
-                                        await controller
-                                            .updateAdditionalDetails(
-                                                data.id, data.farmers_id, () {
-                                          reusableWidget.loader(context);
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                            'Additional Details Updated',
-                                            Icon(
-                                              Icons.check,
-                                              color: MyColors.deepGreen,
-                                            ),
-                                          );
-                                          homeController.getFarmerFarmDetails(
-                                              data.farmers_id, () {}, () {
-                                            homeController
-                                                .checkStatus(data.farmers_id);
-                                            Navigator.pop(context);
-                                          }, () {});
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                            'Error!! Try Again',
-                                            const Icon(
-                                              Icons.warning,
-                                              color: Colors.red,
-                                            ),
-                                          );
-                                        });
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Edit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
-                                : MaterialButton(
-                                    elevation: 0,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none),
-                                    color: MyColors.deepGreen,
-                                    minWidth: Get.width * 0.4,
-                                    onPressed: () async {
-                                      if (controller.formKey.currentState!
-                                          .validate()) {
-                                        await controller.submitAddtionalDetails(
-                                            data.id, () {
-                                          reusableWidget.loader(context);
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                            'Additional Details Added',
-                                            Icon(
-                                              Icons.check,
-                                              color: MyColors.deepGreen,
-                                            ),
-                                          );
-                                          homeController.getFarmerFarmDetails(
-                                              data.id, () {}, () {
-                                            homeController.checkStatus(data.id);
-                                            Navigator.pop(context);
-                                          }, () {});
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                            'Error!! Try Again',
-                                            const Icon(
-                                              Icons.warning,
-                                              color: Colors.red,
-                                            ),
-                                          );
-                                        });
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Submit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                          ),
-                        ],
-                      ),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
                     ],
                   ),
                 ),

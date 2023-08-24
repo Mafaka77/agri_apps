@@ -1,11 +1,14 @@
 import 'package:agri_farmers_app/Data/AgriLandData.dart';
+import 'package:agri_farmers_app/Data/AnimalHusbandryData.dart';
 import 'package:agri_farmers_app/Data/Caste.dart';
 import 'package:agri_farmers_app/Data/District.dart';
+import 'package:agri_farmers_app/Data/Fisheries.dart';
 import 'package:agri_farmers_app/Data/HorticultureQuery.dart';
 import 'package:agri_farmers_app/Data/LandWaterData.dart';
 import 'package:agri_farmers_app/Data/ResourceQuery.dart';
 import 'package:agri_farmers_app/Data/GenderData.dart';
 import 'package:agri_farmers_app/Data/Scheme.dart';
+import 'package:agri_farmers_app/Data/SericultureData.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -39,5 +42,12 @@ class DatabaseConnection {
     await database.execute(HorticultureQuery().orchardsTable);
     await database.execute(HorticultureQuery().greenHousePlantQuery);
     await database.execute(LandWaterData().landCropsTable);
+    await database.execute(Fisheries().fishTable);
+    await database.execute(AnimalHusbandry().livestockTable);
+    await database.execute(AnimalHusbandry().typeOfFarmTable);
+    await database.execute(AnimalHusbandry().typeOfBreedTable);
+    await database.execute(AnimalHusbandry().typeOfPoultryBreedTable);
+    await database.execute(AnimalHusbandry().typeOfPoultryFarmTable);
+    await database.execute(SericultureData().silkwormTable);
   }
 }

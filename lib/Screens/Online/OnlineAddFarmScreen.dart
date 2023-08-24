@@ -16,6 +16,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -33,6 +34,7 @@ class OnlineAddFarmScreen extends StatelessWidget {
   HomeScreenServices screenServices = Get.find(tag: 'homeScreenServices');
   BasicInfoServices basicInfoServices = Get.find(tag: 'basicInfoServices');
   OnlineHomeController homeController = Get.find();
+  var storage = const FlutterSecureStorage();
   var data = Get.arguments[0];
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,112 @@ class OnlineAddFarmScreen extends StatelessWidget {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: MyColors.deepGreen,
+            ),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    elevation: 0,
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(color: MyColors.deepGreen),
+                        borderRadius: BorderRadius.circular(20)),
+                    minWidth: Get.width * 0.4,
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Back',
+                      style: TextStyle(color: MyColors.deepGreen),
+                    ),
+                  ),
+                  Obx(() {
+                    return controller.isEdit.isTrue
+                        ? MaterialButton(
+                            elevation: 0,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none),
+                            color: MyColors.deepGreen,
+                            minWidth: Get.width * 0.4,
+                            onPressed: () async {
+                              controller.editAgriFarm(data.farmers_id, () {
+                                reusableWidget.loader(context);
+                              }, () {
+                                Loader.hide();
+                                reusableWidget.rawSnackBar(
+                                  'Successfully Edited',
+                                  const Icon(
+                                    Icons.check,
+                                    color: Colors.blue,
+                                  ),
+                                );
+                                homeController.getFarmerFarmDetails(
+                                    data.farmers_id, () {}, () {
+                                  Navigator.pop(context);
+                                }, () {});
+                              }, () {
+                                Loader.hide();
+                                reusableWidget.rawSnackBar(
+                                  'Error Occured!!',
+                                  const Icon(
+                                    Icons.warning,
+                                    color: Colors.red,
+                                  ),
+                                );
+                              });
+                            },
+                            child: const Text(
+                              'Update',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : MaterialButton(
+                            elevation: 0,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none),
+                            color: MyColors.deepGreen,
+                            minWidth: Get.width * 0.4,
+                            onPressed: () async {
+                              if (controller.formKey.currentState!.validate()) {
+                                controller.submitOnlineAgricultureLand(data.id,
+                                    () {
+                                  reusableWidget.loader(context);
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                    'Successfully Added',
+                                    const Icon(
+                                      Icons.check,
+                                      color: Colors.blue,
+                                    ),
+                                  );
+                                  homeController
+                                      .getFarmerFarmDetails(data.id, () {}, () {
+                                    Navigator.pop(context);
+                                  }, () {});
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                    'Error Occured',
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                });
+                              }
+                            },
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                  })
+                ],
+              ),
             ),
             body: SingleChildScrollView(
               child: Padding(
@@ -244,6 +352,7 @@ class OnlineAddFarmScreen extends StatelessWidget {
                         onChanged: (data) {
                           controller.districtId.value = data!.id;
                           controller.districtIdForBlock.value = data.id;
+                          controller.districtIdForSubDivision.value = data.id;
                         },
                       ),
                       reusableWidget.textBoxSpace(),
@@ -267,7 +376,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           ),
                         ),
                         asyncItems: (String filter) async {
-                          var response = await screenServices.getSubDivision();
+                          var response = await screenServices.getSubDivision(
+                              controller.districtIdForSubDivision.value);
                           var data = SubDivisionModel.fromJsonList(response);
                           return data;
                         },
@@ -741,112 +851,11 @@ class OnlineAddFarmScreen extends StatelessWidget {
                         ),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          MaterialButton(
-                            elevation: 0,
-                            shape: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: MyColors.deepGreen),
-                                borderRadius: BorderRadius.circular(20)),
-                            minWidth: Get.width * 0.4,
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text(
-                              'Back',
-                              style: TextStyle(color: MyColors.deepGreen),
-                            ),
-                          ),
-                          Obx(() {
-                            return controller.isEdit.isTrue
-                                ? MaterialButton(
-                                    elevation: 0,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none),
-                                    color: MyColors.deepGreen,
-                                    minWidth: Get.width * 0.4,
-                                    onPressed: () async {
-                                      controller.editAgriFarm(data.farmers_id,
-                                          () {
-                                        reusableWidget.loader(context);
-                                      }, () {
-                                        Loader.hide();
-                                        reusableWidget.rawSnackBar(
-                                          'Successfully Edited',
-                                          const Icon(
-                                            Icons.check,
-                                            color: Colors.blue,
-                                          ),
-                                        );
-                                        homeController.getFarmerFarmDetails(
-                                            data.farmers_id, () {}, () {
-                                          Navigator.pop(context);
-                                        }, () {});
-                                      }, () {
-                                        Loader.hide();
-                                        reusableWidget.rawSnackBar(
-                                          'Error Occured!!',
-                                          const Icon(
-                                            Icons.warning,
-                                            color: Colors.red,
-                                          ),
-                                        );
-                                      });
-                                    },
-                                    child: const Text(
-                                      'Edit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
-                                : MaterialButton(
-                                    elevation: 0,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none),
-                                    color: MyColors.deepGreen,
-                                    minWidth: Get.width * 0.4,
-                                    onPressed: () async {
-                                      if (controller.formKey.currentState!
-                                          .validate()) {
-                                        controller.submitOnlineAgricultureLand(
-                                            data.id, () {
-                                          reusableWidget.loader(context);
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                            'Successfully Added',
-                                            const Icon(
-                                              Icons.check,
-                                              color: Colors.blue,
-                                            ),
-                                          );
-                                          homeController.getFarmerFarmDetails(
-                                              data.id, () {}, () {
-                                            Navigator.pop(context);
-                                          }, () {});
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                            'Error Occured',
-                                            const Icon(
-                                              Icons.warning,
-                                              color: Colors.red,
-                                            ),
-                                          );
-                                        });
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Submit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  );
-                          })
-                        ],
-                      ),
+
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),
                     ],

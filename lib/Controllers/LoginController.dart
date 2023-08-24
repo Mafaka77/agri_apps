@@ -15,14 +15,16 @@ class LoginController extends GetxController {
 
   var passwordHide = true.obs;
 
-  void login() async {
+  void login(Function onLoading, Function onSuccess, Function onError) async {
+    onLoading();
     try {
       var storage = const FlutterSecureStorage();
       var data = await loginServices.loginUser(
           emailTextController.text, passwordTextController.text);
-      print(data);
       await storage.write(key: 'userId', value: data['user']['id'].toString());
       await storage.write(key: 'token', value: data['token'].toString());
+      await storage.write(
+          key: 'district_id', value: data['user']['district_id'].toString());
       var locationPermission = await Permission.location.status;
       var cameraPermission = await Permission.camera.status;
       if (locationPermission.isGranted && cameraPermission.isGranted) {
@@ -30,14 +32,9 @@ class LoginController extends GetxController {
       } else {
         Get.offAll(() => ResourceScreen());
       }
+      onSuccess();
     } catch (ex) {
-      reusableWidget.rawSnackBar(
-        'Login Failed!! Try again...',
-        const Icon(
-          Icons.warning,
-          color: Colors.red,
-        ),
-      );
+      onError();
     }
   }
 }

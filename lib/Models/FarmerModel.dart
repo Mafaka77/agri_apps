@@ -30,6 +30,7 @@ class FarmerModel {
   String? village_lgd_code;
   String? status;
   String? verification;
+  String? rejection_note;
   int? user_id;
   int? district_id;
   int? sub_division_id;
@@ -71,6 +72,7 @@ class FarmerModel {
     this.village_lgd_code,
     this.status,
     this.verification,
+    this.rejection_note,
     this.user_id,
     this.district_id,
     this.sub_division_id,
@@ -189,6 +191,7 @@ class FarmerModel {
         village_lgd_code: map['village_lgd_code'],
         status: map['status'],
         verification: map['verification'],
+        rejection_note: map['rejection_note'],
         user_id: map['user_id']?.toInt() ?? 0,
         district_id: map['district_id']?.toInt() ?? 0,
         sub_division_id: map['sub_division_id']?.toInt() ?? 0,

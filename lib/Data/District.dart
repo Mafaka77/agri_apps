@@ -15,7 +15,7 @@ class District {
   String districtTable =
       "CREATE TABLE IF NOT EXISTS districts(id INTEGER PRIMARY KEY,district_name VARCHAR)";
   String subDivisiontable =
-      "CREATE TABLE IF NOT EXISTS sub_divisions(id INTEGER PRIMARY KEY,sub_division_name VARCHAR)";
+      "CREATE TABLE IF NOT EXISTS sub_divisions(id INTEGER PRIMARY KEY,sub_division_name VARCHAR,district_id INTEGER)";
   String rdBlockTable =
       "CREATE TABLE IF NOT EXISTS blocks(id INTEGER PRIMARY KEY,block_name VARCHAR,district_id INTEGER)";
 

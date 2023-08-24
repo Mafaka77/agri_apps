@@ -1,8 +1,11 @@
 import 'package:agri_farmers_app/Models/AgricultureFarmModel.dart';
+import 'package:agri_farmers_app/Models/AnimalHusbandryModel.dart';
 import 'package:agri_farmers_app/Models/FarmerAdditionalDetailModel.dart';
 import 'package:agri_farmers_app/Models/FarmerModel.dart';
+import 'package:agri_farmers_app/Models/FisheriesModel.dart';
 import 'package:agri_farmers_app/Models/HorticultureModel.dart';
 import 'package:agri_farmers_app/Models/LandWaterModel.dart';
+import 'package:agri_farmers_app/Models/SericultureModel.dart';
 import 'package:agri_farmers_app/Services/OnlineHomeScreenServices.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,12 +23,17 @@ class OnlineHomeController extends GetxController {
   var additionalDetails = <FarmerAdditionalDetailModel>[].obs;
   var horticultureList = <HorticultureModel>[].obs;
   var landWaterList = <LandWaterModel>[].obs;
-
+  var fisherieList = <FisheriesModel>[].obs;
+  var husbandryList = <AnimalHusbandryModel>[].obs;
+  var sericultureList = <SericultureModel>[].obs;
   var isDataLoading = false.obs;
   var farmerOffset = 0.obs;
   var farmerLimit = 10.obs;
   var searchTextController = TextEditingController();
   var verification = ''.obs;
+  //----
+  var sortBy = ''.obs;
+  var filterBy = ''.obs;
   //----------------------------------------------------------------------------
   @override
   void onInit() {
@@ -90,7 +98,9 @@ class OnlineHomeController extends GetxController {
           FarmerAdditionalDetailModel.fromJsonList(data['additional']);
       var horticulture = HorticultureModel.fromJsonList(data['horticulture']);
       var landWater = LandWaterModel.fromJsonList(data['landWater']);
-
+      var fisheries = FisheriesModel.fromJsonList(data['fisheries']);
+      var husbandry = AnimalHusbandryModel.fromJsonList(data['husbandry']);
+      var sericulture = SericultureModel.fromJsonList(data['sericulture']);
       additionalDetails.clear();
       additionalDetails.addAll(additional);
       farmerAgriLandList.clear();
@@ -99,8 +109,15 @@ class OnlineHomeController extends GetxController {
       horticultureList.addAll(horticulture);
       landWaterList.clear();
       landWaterList.addAll(landWater);
+      fisherieList.clear();
+      fisherieList.addAll(fisheries);
+      husbandryList.clear();
+      husbandryList.addAll(husbandry);
+      sericultureList.clear();
+      sericultureList.addAll(sericulture);
       onSuccess();
     } catch (ex) {
+      print(ex);
       onError();
     }
   }

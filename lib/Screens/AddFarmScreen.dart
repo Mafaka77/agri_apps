@@ -12,6 +12,7 @@ import 'package:agri_farmers_app/ReusableWidget.dart';
 import 'package:agri_farmers_app/Services/FarmLandServices.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -28,6 +29,7 @@ class AddFarmScreen extends StatelessWidget {
   FarmLandServices farmLandServices = Get.find(tag: 'farmLandServices');
   HomeScreenServices screenServices = Get.find(tag: 'homeScreenServices');
   BasicInfoServices basicInfoServices = Get.find(tag: 'basicInfoServices');
+  var storage = const FlutterSecureStorage();
   var data = Get.arguments[0];
   @override
   Widget build(BuildContext context) {
@@ -187,6 +189,8 @@ class AddFarmScreen extends StatelessWidget {
                           ),
                         ),
                         asyncItems: (String filter) async {
+                          var districtID =
+                              await storage.read(key: 'district_id');
                           var res = await screenServices.getAllDistrict();
                           var data = DistrictModel.fromJsonList(res);
                           return data;
@@ -211,7 +215,7 @@ class AddFarmScreen extends StatelessWidget {
                           ),
                         ),
                         asyncItems: (String filter) async {
-                          var response = await screenServices.getSubDivision();
+                          var response = await screenServices.getSubDivision(1);
                           var data = SubDivisionModel.fromJsonList(response);
                           return data;
                         },

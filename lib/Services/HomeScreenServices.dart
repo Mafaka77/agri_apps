@@ -23,6 +23,10 @@ class HomeScreenServices extends BaseService {
     return await repository.readData('districts');
   }
 
+  getDistrict(int id) async {
+    return await repository.readDataById('districts', id);
+  }
+
   UpdateUser(DistrictModel user) async {
     return await repository.updateData('users', user.toMap());
   }
@@ -71,7 +75,7 @@ class HomeScreenServices extends BaseService {
         'sub_divisions', subDivisionModel.toMap());
   }
 
-  getSubDivision() async {
-    return await repository.readData('sub_divisions');
+  getSubDivision(int id) async {
+    return await repository.getSubDivision('sub_divisions', id);
   }
 }

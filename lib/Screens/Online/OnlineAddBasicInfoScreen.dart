@@ -12,6 +12,7 @@ import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
@@ -24,6 +25,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
   HomeScreenServices screenServices = Get.find(tag: 'homeScreenServices');
   BasicInfoServices basicInfoServices = Get.find(tag: 'basicInfoServices');
   OnlineHomeController onlineHomeController = Get.find();
+  var storage = const FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BasicInfoController>(
@@ -42,6 +44,106 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                   },
                 ),
                 backgroundColor: MyColors.deepGreen),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    elevation: 0,
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(color: MyColors.deepGreen),
+                        borderRadius: BorderRadius.circular(20)),
+                    minWidth: Get.width * 0.4,
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Back',
+                      style: TextStyle(color: MyColors.deepGreen),
+                    ),
+                  ),
+                  Obx(() {
+                    return controller.checkIsEdit.isTrue
+                        ? MaterialButton(
+                            elevation: 0,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none),
+                            color: MyColors.deepGreen,
+                            minWidth: Get.width * 0.4,
+                            onPressed: () async {
+                              if (controller.formKey.currentState!.validate()) {
+                                controller.editBasicInfo(() {
+                                  reusableWidget.loader(context);
+                                }, (int farmerId) {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                      'Farmer Basic Info Updated',
+                                      const Icon(
+                                        Icons.check,
+                                        color: Colors.blue,
+                                      ));
+                                  onlineHomeController.getAllFarmers('');
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                      'Error Occured!! Try Again',
+                                      const Icon(
+                                        Icons.warning,
+                                        color: Colors.red,
+                                      ));
+                                });
+                              }
+                            },
+                            child: const Text(
+                              'Update',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : MaterialButton(
+                            elevation: 0,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none),
+                            color: MyColors.deepGreen,
+                            minWidth: Get.width * 0.4,
+                            onPressed: () async {
+                              if (controller.formKey.currentState!.validate()) {
+                                controller.saveFarmerOnline(() {
+                                  reusableWidget.loader(context);
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                      'Farmer Basic Info Submitted',
+                                      const Icon(
+                                        Icons.check,
+                                        color: Colors.blue,
+                                      ));
+                                  onlineHomeController.getAllFarmers('');
+                                  Navigator.pop(context);
+                                }, () {
+                                  Loader.hide();
+                                  reusableWidget.rawSnackBar(
+                                      'Error Occured!! Try Again',
+                                      const Icon(
+                                        Icons.warning,
+                                        color: Colors.red,
+                                      ));
+                                });
+                              }
+                            },
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                  })
+                ],
+              ),
+            ),
             body: SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(left: 10, right: 10),
@@ -225,6 +327,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.aadhaarTextController,
+                        keyboardType: TextInputType.number,
                         maxLength: 12,
                         decoration: InputDecoration(
                           isDense: true,
@@ -434,13 +537,16 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var res = await screenServices.getAllDistrict();
+                            var districtId =
+                                await storage.read(key: 'district_id');
+                            var res = await screenServices
+                                .getDistrict(int.parse(districtId.toString()));
                             var data = DistrictModel.fromJsonList(res);
                             return data;
                           },
                           onChanged: (data) {
                             controller.districtID.value = data!.id;
-
+                            controller.districtIdForSubDivision.value = data.id;
                             controller.districtIdForBlock.value = data.id;
                           },
                         ),
@@ -467,8 +573,10 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var response =
-                                await screenServices.getSubDivision();
+                            var response = await screenServices.getSubDivision(
+                                int.parse(controller
+                                    .districtIdForSubDivision.value
+                                    .toString()));
                             var data = SubDivisionModel.fromJsonList(response);
                             return data;
                           },
@@ -576,6 +684,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.accountNumberTextController,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           isDense: true,
                           errorBorder: reusableWidget.errorBorderStyle(),
@@ -631,108 +740,12 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          MaterialButton(
-                            elevation: 0,
-                            shape: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: MyColors.deepGreen),
-                                borderRadius: BorderRadius.circular(20)),
-                            minWidth: Get.width * 0.4,
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text(
-                              'Back',
-                              style: TextStyle(color: MyColors.deepGreen),
-                            ),
-                          ),
-                          Obx(() {
-                            return controller.checkIsEdit.isTrue
-                                ? MaterialButton(
-                                    elevation: 0,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none),
-                                    color: MyColors.deepGreen,
-                                    minWidth: Get.width * 0.4,
-                                    onPressed: () async {
-                                      if (controller.formKey.currentState!
-                                          .validate()) {
-                                        controller.editBasicInfo(() {
-                                          reusableWidget.loader(context);
-                                        }, (int farmerId) {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                              'Farmer Basic Info Updated',
-                                              const Icon(
-                                                Icons.check,
-                                                color: Colors.blue,
-                                              ));
-                                          onlineHomeController
-                                              .getAllFarmers('');
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                              'Error Occured!! Try Again',
-                                              const Icon(
-                                                Icons.warning,
-                                                color: Colors.red,
-                                              ));
-                                        });
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Edit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
-                                : MaterialButton(
-                                    elevation: 0,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        borderSide: BorderSide.none),
-                                    color: MyColors.deepGreen,
-                                    minWidth: Get.width * 0.4,
-                                    onPressed: () async {
-                                      if (controller.formKey.currentState!
-                                          .validate()) {
-                                        controller.saveFarmerOnline(() {
-                                          reusableWidget.loader(context);
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                              'Farmer Basic Info Submitted',
-                                              const Icon(
-                                                Icons.check,
-                                                color: Colors.blue,
-                                              ));
-                                          onlineHomeController
-                                              .getAllFarmers('');
-                                          Navigator.pop(context);
-                                        }, () {
-                                          Loader.hide();
-                                          reusableWidget.rawSnackBar(
-                                              'Error Occured!! Try Again',
-                                              const Icon(
-                                                Icons.warning,
-                                                color: Colors.red,
-                                              ));
-                                        });
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Submit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  );
-                          })
-                        ],
-                      ),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
+                      reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),
                     ],

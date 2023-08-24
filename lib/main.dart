@@ -1,20 +1,26 @@
 import 'package:agri_farmers_app/Services/AdditionalScreenServices.dart';
+import 'package:agri_farmers_app/Services/AnimalHusbandryServices.dart';
 import 'package:agri_farmers_app/Services/BasicInfoServices.dart';
 import 'package:agri_farmers_app/Services/FarmLandServices.dart';
+import 'package:agri_farmers_app/Services/FisheriesScreenServices.dart';
 import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
 import 'package:agri_farmers_app/Services/HorticultureScreenServices.dart';
 import 'package:agri_farmers_app/Services/LandWaterScreenServices.dart';
 import 'package:agri_farmers_app/Services/LoginServices.dart';
 import 'package:agri_farmers_app/Services/OnlineHomeScreenServices.dart';
 import 'package:agri_farmers_app/Services/ResourceServices.dart';
+import 'package:agri_farmers_app/Services/SericultureScreenServices.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'Screens/HomeScreen.dart';
 import 'Screens/LoginScreen.dart';
+import 'Screens/ResourceScreen.dart';
 
 String? myStorage;
+late PermissionStatus permission;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(BasicInfoServices(), tag: 'basicInfoServices');
@@ -26,9 +32,13 @@ void main() async {
   Get.put(AdditionalScreenServices(), tag: 'additionalScreenServices');
   Get.put(HorticultureScreenServices(), tag: 'horticultureServices');
   Get.put(LandWaterScreenServices(), tag: 'landWaterScreenServices');
-
+  Get.put(FisheriesScreenServices(), tag: 'fisherieScreenServices');
+  Get.put(AnimalHusbandryServices(), tag: 'animalHusbandryServices');
+  Get.put(SericultureScreenServices(), tag: 'sericultureScreenServices');
   const storage = FlutterSecureStorage();
+  permission = await Permission.location.status;
   myStorage = await storage.read(key: 'token');
+
   runApp(const MyApp());
 }
 
@@ -45,7 +55,11 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
       ),
-      home: myStorage != null ? HomeScreen() : LoginScreen(),
+      home: myStorage != null
+          ? HomeScreen()
+          : !permission.isGranted
+              ? ResourceScreen()
+              : LoginScreen(),
       // home: ResourceScreen(),
     );
   }

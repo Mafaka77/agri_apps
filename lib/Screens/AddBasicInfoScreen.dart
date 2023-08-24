@@ -11,6 +11,7 @@ import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
@@ -22,6 +23,7 @@ class AddBasicInfoScreen extends StatelessWidget {
   ReusableWidget reusableWidget = ReusableWidget();
   HomeScreenServices screenServices = Get.find(tag: 'homeScreenServices');
   BasicInfoServices basicInfoServices = Get.find(tag: 'basicInfoServices');
+  var storage = const FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BasicInfoController>(
@@ -418,7 +420,10 @@ class AddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var res = await screenServices.getAllDistrict();
+                            var districtId =
+                                await storage.read(key: 'district_id');
+                            var res = await screenServices
+                                .getDistrict(int.parse(districtId.toString()));
                             var data = DistrictModel.fromJsonList(res);
                             return data;
                           },
@@ -451,7 +456,7 @@ class AddBasicInfoScreen extends StatelessWidget {
                           ),
                           asyncItems: (String filter) async {
                             var response =
-                                await screenServices.getSubDivision();
+                                await screenServices.getSubDivision(1);
                             var data = SubDivisionModel.fromJsonList(response);
                             return data;
                           },

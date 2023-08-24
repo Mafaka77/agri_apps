@@ -1,6 +1,6 @@
 class Routes {
-  // static String BASE_URL = 'http://192.168.29.6:8000/api/';
-  static String BASE_URL = 'http://10.180.243.103:8000/api/';
+  // static String BASE_URL = 'http://192.168.1.68:8000/api/';
+  static String BASE_URL = 'http://10.180.243.118:8000/api/';
 
   //LOGIN
   static String LOGIN = '${BASE_URL}login';
@@ -22,6 +22,7 @@ class Routes {
   static String GET_ALL_SCHEME = '${BASE_URL}get-all-scheme';
   static String GET_HORTICULTURE_DATA = '${BASE_URL}get-horticulture-data';
   static String GET_LAND_CROPS = '${BASE_URL}get-land-crops';
+  static String GET_ALL_RESOURCES = '${BASE_URL}get-all-resources';
 
   //ONLINE DATA
   static String GET_ALL_FARMERS(id) => '${BASE_URL}get-all-farmers/$id';
@@ -66,4 +67,25 @@ class Routes {
   static String SUBMIT_LAND_WATER = '${BASE_URL}submit-land-water';
   static String GET_LAND_WATER(id) => '${BASE_URL}get-land-water/$id';
   static String UPDATE_LAND_WATER(id) => '${BASE_URL}update-land-water/$id';
+
+  //FISHERIES
+  static String SUBMIT_FISHERIES = '${BASE_URL}submit-fisheries';
+  static String GET_FISHERIE_DATA(id) => '${BASE_URL}get-fisheries/$id';
+  static String UPDATE_FISHERIES(id) => '${BASE_URL}update-fisheries/$id';
+  static String DELETE_FISHERIES(id) => '${BASE_URL}delete-fisheries/$id';
+
+  //ANIMAL HUSBANDRY
+  static String SUBMIT_ANIMAL_HUSBANDRY = '${BASE_URL}submit-animal-husbandry';
+  static String GET_ANIMAL_HUSBANDRY(id) =>
+      '${BASE_URL}get-animal-husbandry/$id';
+  static String UPDATE_ANIMAL_HUSBANDRY(id) =>
+      '${BASE_URL}update-animal-husbandry/$id';
+  static String DELETE_ANIMAL_HUSBANDRY(id) =>
+      '${BASE_URL}delete-animal-husbandry/$id';
+
+  //SERICULTURE
+  static String SUBMIT_SERICULTURE = '${BASE_URL}submit-sericulture';
+  static String GET_SERICULTURE(id) => '${BASE_URL}get-sericulture/$id';
+  static String UPDATE_SERICULTURE(id) => '${BASE_URL}update-sericulture/$id';
+  static String DELETE_SERICULTURE(id) => '${BASE_URL}delete-sericulture/$id';
 }

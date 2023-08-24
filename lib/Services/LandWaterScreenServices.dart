@@ -43,7 +43,13 @@ class LandWaterScreenServices extends BaseService {
   Future updateLandWater(
       int id, LandWaterModel landWaterModel, var landCrops) async {
     try {
-      var reponse = await client.put(Routes.UPDATE_LAND_WATER(id));
-    } catch (ex) {}
+      var response = await client.put(Routes.UPDATE_LAND_WATER(id), data: {
+        'data': landWaterModel.toMap(),
+        'landCrops': landCrops,
+      });
+      return response.data;
+    } catch (ex) {
+      return Future.error(ex);
+    }
   }
 }

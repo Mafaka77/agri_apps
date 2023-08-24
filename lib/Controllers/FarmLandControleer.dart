@@ -66,6 +66,7 @@ class FarmLandController extends GetxController {
   var agriFarmID = 0.obs;
   //DATAS
   var filePath = ''.obs;
+  var districtIdForSubDivision = 0.obs;
   var districtIdForBlock = 0.obs;
   var blockIdForVillage = 0.obs;
   var isEdit = false.obs;

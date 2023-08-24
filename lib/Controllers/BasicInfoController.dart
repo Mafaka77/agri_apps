@@ -57,6 +57,7 @@ class BasicInfoController extends GetxController {
   var villageValue = Rxn<VillageModel>();
   //LIST OF DATAS
   var allGenderList = <GenderModel>[].obs;
+  var districtIdForSubDivision = 0.obs;
   var districtIdForBlock = 0.obs;
   var blockIdForVillage = 0.obs;
 

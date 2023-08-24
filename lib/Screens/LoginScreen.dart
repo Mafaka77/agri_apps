@@ -1,7 +1,9 @@
 import 'package:agri_farmers_app/Controllers/LoginController.dart';
 import 'package:agri_farmers_app/MyColors.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -13,13 +15,15 @@ class LoginScreen extends StatelessWidget {
         init: LoginController(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   Center(
-                    child: Image(
-                      image: const AssetImage('images/login_logo.jpg'),
+                    child: ExtendedImage.asset(
+                      enableMemoryCache: true,
+                      'images/login_logo.jpg',
                       height: Get.height * 0.4,
                     ),
                   ),
@@ -69,7 +73,25 @@ class LoginScreen extends StatelessWidget {
                     color: MyColors.deepGreen,
                     minWidth: Get.width,
                     onPressed: () {
-                      controller.login();
+                      controller.login(() {
+                        reusableWidget.loader(context);
+                      }, () {
+                        Loader.hide();
+                        reusableWidget.rawSnackBar(
+                            'Welcome...',
+                            const Icon(
+                              Icons.check,
+                              color: Colors.blue,
+                            ));
+                      }, () {
+                        Loader.hide();
+                        reusableWidget.rawSnackBar(
+                            'Login failed...Try Again',
+                            const Icon(
+                              Icons.warning,
+                              color: Colors.red,
+                            ));
+                      });
                     },
                     child: const Text(
                       'LOGIN',
