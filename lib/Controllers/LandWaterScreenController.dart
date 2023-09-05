@@ -52,19 +52,29 @@ class LandWaterScreenController extends GetxController {
     }
   }
 
-  updateLandWater(int farmerId, Function onLoading, Function onSuccess,
+  updateLandWater(int id, int farmerId, Function onLoading, Function onSuccess,
       Function onError) async {
     onLoading();
     try {
       var land = LandWaterModel();
-      land.id = landWaterId.value;
+      land.id = id;
       land.farmers_id = farmerId;
       land.owner_id = ownerID.text;
       land.location = location.text;
       land.crops_acres_or_hectares = 'Acres';
       land.total_area = totalArea.text;
-      var res =
-          await services.updateLandWater(landWaterId.value, land, cropsGrown);
+      var res = await services.updateLandWater(id, land, cropsGrown);
+      onSuccess();
+    } catch (ex) {
+      onError();
+    }
+  }
+
+  deleteLandWater(
+      int id, Function onLoading, Function onSuccess, Function onError) async {
+    onLoading();
+    try {
+      var data = await services.deleteLandWater(id);
       onSuccess();
     } catch (ex) {
       onError();

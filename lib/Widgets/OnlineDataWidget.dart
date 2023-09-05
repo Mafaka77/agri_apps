@@ -1,3 +1,4 @@
+import 'package:agri_farmers_app/Controllers/BasicInfoController.dart';
 import 'package:agri_farmers_app/Controllers/OnlineHomeController.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
 import 'package:agri_farmers_app/Screens/Online/OnlineAddBasicInfoScreen.dart';
@@ -31,6 +32,7 @@ class OnlineDataWidget extends StatelessWidget {
               elevation: 0,
               color: MyColors.deepGreen,
               onPressed: () {
+                Get.delete<BasicInfoController>();
                 Get.to(() => OnlineAddBasicInfoScreen());
               },
               child: const Text(
@@ -180,7 +182,7 @@ class OnlineDataWidget extends StatelessWidget {
                                                 style: TextStyle(
                                                     color: data.status ==
                                                             'Incomplete'
-                                                        ? Colors.red
+                                                        ? Colors.grey
                                                         : MyColors.deepGreen),
                                               ),
                                             ],
@@ -248,6 +250,7 @@ class OnlineDataWidget extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
+                          controller.getAllFarmers('');
                           Navigator.pop(context);
                         },
                         child: const Text('Apply')),

@@ -12,7 +12,7 @@ import '../../MyColors.dart';
 
 class OnlineAddLandWaterScreen extends StatelessWidget {
   OnlineAddLandWaterScreen({Key? key}) : super(key: key);
-  var farmerId = Get.arguments[0];
+  var data = Get.arguments[0];
   ReusableWidget reusableWidget = ReusableWidget();
   LandWaterScreenServices services = Get.find(tag: 'landWaterScreenServices');
   OnlineHomeController homeController = Get.find();
@@ -22,6 +22,7 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
         init: LandWaterScreenController(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             bottomSheet: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Row(
@@ -52,18 +53,19 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                await controller.updateLandWater(farmerId, () {
+                                await controller.updateLandWater(
+                                    data.id, data.farmers_id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
                                   reusableWidget.rawSnackBar(
-                                      'Successfully Added',
+                                      'Successfully Updated',
                                       const Icon(
                                         Icons.check,
                                         color: Colors.blue,
                                       ));
                                   homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                      data.farmers_id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {
@@ -98,7 +100,7 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                await controller.submitLandWater(farmerId, () {
+                                await controller.submitLandWater(data.id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -108,8 +110,8 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                                         Icons.check,
                                         color: Colors.blue,
                                       ));
-                                  homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                  homeController
+                                      .getFarmerFarmDetails(data.id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {

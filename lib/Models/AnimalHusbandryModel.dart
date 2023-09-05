@@ -55,8 +55,8 @@ class AnimalHusbandryModel {
   factory AnimalHusbandryModel.fromMap(Map<String, dynamic> map) {
     return AnimalHusbandryModel(
       id: map['id']?.toInt(),
-      husbandry_id: map['husbandry_id'],
-      location: map['location'],
+      husbandry_id: map['husbandry_id'] ?? '',
+      location: map['location'] ?? '',
       adult_male: map['adult_male']?.toInt(),
       adult_female: map['adult_female']?.toInt(),
       young_stock: map['young_stock']?.toInt(),

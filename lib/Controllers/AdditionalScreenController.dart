@@ -17,6 +17,7 @@ class AdditionalScreenController extends GetxController {
   AdditionalScreenServices services = Get.find(tag: 'additionalScreenServices');
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var schemes = <SchemeModel>[].obs;
+  var additionalId = 0.obs;
   var schemeId = 0.obs;
   var schemeName = ''.obs;
   var availed = 'Yes'.obs;
@@ -134,6 +135,7 @@ class AdditionalScreenController extends GetxController {
     onLoading();
     try {
       var data = await services.getAdditionalDetails(id);
+      additionalId.value = data.id!;
       rationCardNumberTextController.text = data.ration_card_number!;
       rationCardFileNameTextController.text = data.ration_card_path!;
       isKCCAvailed.value = data.is_kcc_availed == 0 ? 'No' : 'Yes';
@@ -198,6 +200,7 @@ class AdditionalScreenController extends GetxController {
           await services.updateAdditionalDetail(id, additional, schemeApplied);
       onSuccess();
     } catch (ex) {
+      print(ex);
       onError();
     }
   }

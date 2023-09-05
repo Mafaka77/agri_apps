@@ -15,13 +15,14 @@ class OnlineAddFisherieScreen extends StatelessWidget {
   ReusableWidget reusableWidget = ReusableWidget();
   FisheriesScreenServices services = Get.find(tag: 'fisherieScreenServices');
   OnlineHomeController homeController = Get.find();
-  var farmerId = Get.arguments[0];
+  var data = Get.arguments[0];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FisheriesScreenController>(
         init: FisheriesScreenController(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             bottomSheet: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Row(
@@ -52,7 +53,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                await controller.updateFisheries(farmerId, () {
+                                await controller.updateFisheries(
+                                    data.id, data.farmers_id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -64,7 +66,7 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                                     ),
                                   );
                                   homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                      data.farmers_id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {
@@ -93,7 +95,7 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                await controller.submitFisheries(farmerId, () {
+                                await controller.submitFisheries(data.id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -104,8 +106,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                                       color: Colors.blue,
                                     ),
                                   );
-                                  homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                  homeController
+                                      .getFarmerFarmDetails(data.id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {

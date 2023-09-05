@@ -91,7 +91,8 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                     ),
                   ],
                 ),
-                trailing: data.verification == 'Submitted'
+                trailing: data.verification == 'Submitted' ||
+                        data.verification == 'Approved'
                     ? null
                     : IconButton(
                         onPressed: () {
@@ -132,18 +133,18 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: homeController.farmerAgriLandList.length,
                     itemBuilder: (c, i) {
-                      var d = homeController.farmerAgriLandList[i];
+                      var agri = homeController.farmerAgriLandList[i];
                       return ListTile(
                         onTap: () {
                           Get.lazyPut(() => FarmLandController());
                           FarmLandController farmLandController = Get.find();
-                          farmLandController.getFarmerAgriLand(d.id!.toInt(),
+                          farmLandController.getFarmerAgriLand(agri.id!.toInt(),
                               () {
                             reusableWidget.loader(context);
                           }, () {
                             Loader.hide();
                             Get.to(() => OnlineAddFarmScreen(),
-                                arguments: [data]);
+                                arguments: [agri]);
                           }, () {
                             Loader.hide();
                           });
@@ -151,14 +152,15 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                         dense: true,
                         leading: const Icon(Icons.person),
                         title: Text(
-                          d.land_owner_name.toString(),
+                          agri.land_owner_name.toString(),
                           style: const TextStyle(fontSize: 13),
                         ),
                         subtitle: Text(
-                          d.district!.district_name.toString(),
+                          agri.district!.district_name.toString(),
                           style: const TextStyle(fontSize: 11),
                         ),
-                        trailing: data.verification == 'Submitted'
+                        trailing: data.verification == 'Submitted' ||
+                                data.verification == 'Approved'
                             ? null
                             : IconButton(
                                 icon: const Icon(
@@ -166,7 +168,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   color: Colors.red,
                                 ),
                                 onPressed: () {
-                                  openAgriDeleteDialog(data.id!, context);
+                                  openAgriDeleteDialog(agri.id!, context);
                                 },
                               ),
                       );
@@ -182,6 +184,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                         ? MyColors.deepGreen
                         : Colors.green[500],
                     onPressed: () {
+                      Get.delete<AdditionalScreenController>();
                       Get.to(() => OnlineAddAdditionalScreen(),
                           arguments: [data]);
                     },
@@ -199,7 +202,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.additionalDetails.length,
                   itemBuilder: (c, i) {
-                    var d = controller.additionalDetails[i];
+                    var additional = controller.additionalDetails[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -209,23 +212,24 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Get.lazyPut(() => AdditionalScreenController());
                           AdditionalScreenController
                               additionalScreenController = Get.find();
-                          additionalScreenController.getAdditionalDetails(d.id!,
-                              () {
+                          additionalScreenController
+                              .getAdditionalDetails(additional.id!, () {
                             reusableWidget.loader(context);
                           }, () {
                             Loader.hide();
                             Get.to(() => OnlineAddAdditionalScreen(),
-                                arguments: [data]);
+                                arguments: [additional]);
                           }, () {
                             Loader.hide();
                           });
                         },
                         leading: const Icon(Icons.person),
                         title: Text(
-                          d.ration_card_number.toString(),
+                          additional.ration_card_number.toString(),
                           style: const TextStyle(fontSize: 13),
                         ),
-                        trailing: data.verification == 'Submitted'
+                        trailing: data.verification == 'Submitted' ||
+                                data.verification == 'Approved'
                             ? null
                             : IconButton(
                                 icon: const Icon(
@@ -233,7 +237,8 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   color: Colors.red,
                                 ),
                                 onPressed: () {
-                                  openAdditionalDeleteDialog(data.id!, context);
+                                  openAdditionalDeleteDialog(
+                                      additional.id!, context);
                                 },
                               ),
                       ),
@@ -257,7 +262,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 onPressed: () {
                   Get.delete<HorticultureScreenController>();
                   Get.to(() => OnlineAddHorticultureScreen(),
-                      arguments: [data.id]);
+                      arguments: [data]);
                 },
                 child: Text(
                   'ADD HORTICULTURE',
@@ -271,7 +276,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.horticultureList.length,
                   itemBuilder: (c, i) {
-                    var data = controller.horticultureList[i];
+                    var horti = controller.horticultureList[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -283,12 +288,12 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                 horticultureScreenController = Get.find();
                             horticultureScreenController.isEdit.value = true;
                             horticultureScreenController
-                                .getHortiDetails(data.id!, () {
+                                .getHortiDetails(horti.id!, () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
                               Get.to(() => OnlineAddHorticultureScreen(),
-                                  arguments: [data.farmers_id]);
+                                  arguments: [horti]);
                             }, () {
                               Loader.hide();
                               reusableWidget.rawSnackBar(
@@ -299,14 +304,14 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   ));
                             });
                           },
-                          leading: Text(data.location.toString()),
+                          leading: Text(horti.location.toString()),
                           trailing: IconButton(
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              openHorticultureDeleteDialog(data.id!, context);
+                              openHorticultureDeleteDialog(horti.id!, context);
                             },
                           )),
                     );
@@ -322,8 +327,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                     borderSide: BorderSide(color: MyColors.deepGreen)),
                 onPressed: () {
                   Get.delete<LandWaterScreenController>();
-                  Get.to(() => OnlineAddLandWaterScreen(),
-                      arguments: [data.id]);
+                  Get.to(() => OnlineAddLandWaterScreen(), arguments: [data]);
                 },
                 child: Text(
                   'ADD LAND RESOURCE AND WATER CONSERVATION',
@@ -337,7 +341,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.landWaterList.length,
                   itemBuilder: (c, i) {
-                    var data = controller.landWaterList[i];
+                    var land = controller.landWaterList[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -348,13 +352,13 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                             LandWaterScreenController
                                 landWaterScreenController = Get.find();
                             landWaterScreenController.isEdit.value = true;
-                            landWaterScreenController.getLandWaterData(data.id!,
+                            landWaterScreenController.getLandWaterData(land.id!,
                                 () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
                               Get.to(() => OnlineAddLandWaterScreen(),
-                                  arguments: [data.farmers_id]);
+                                  arguments: [land]);
                             }, () {
                               Loader.hide();
                               reusableWidget.rawSnackBar(
@@ -365,14 +369,14 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   ));
                             });
                           },
-                          leading: Text(data.location.toString()),
+                          leading: Text(land.location.toString()),
                           trailing: IconButton(
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              // openHorticultureDeleteDialog(data.id!, context);
+                              openLandDeleteDialog(land.id!, context);
                             },
                           )),
                     );
@@ -385,7 +389,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 elevation: 0,
                 onPressed: () {
                   Get.delete<FisheriesScreenController>();
-                  Get.to(() => OnlineAddFisherieScreen(), arguments: [data.id]);
+                  Get.to(() => OnlineAddFisherieScreen(), arguments: [data]);
                 },
                 child: Text(
                   'ADD FISH POND',
@@ -399,7 +403,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (c, i) {
-                    var data = controller.fisherieList[i];
+                    var fish = controller.fisherieList[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -410,13 +414,13 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                             FisheriesScreenController
                                 fisheriesScreenController = Get.find();
                             fisheriesScreenController.isEdit.value = true;
-                            fisheriesScreenController.getFisherieData(data.id!,
+                            fisheriesScreenController.getFisherieData(fish.id!,
                                 () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
                               Get.to(() => OnlineAddFisherieScreen(),
-                                  arguments: [data.farmers_id]);
+                                  arguments: [fish]);
                             }, () {
                               Loader.hide();
                               reusableWidget.rawSnackBar(
@@ -427,14 +431,14 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   ));
                             });
                           },
-                          leading: Text(data.location.toString()),
+                          leading: Text(fish.location.toString()),
                           trailing: IconButton(
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              openFisheriesDeleteDialog(data.id!, context);
+                              openFisheriesDeleteDialog(fish.id!, context);
                             },
                           )),
                     );
@@ -448,7 +452,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 onPressed: () {
                   Get.delete<AnimalHusbandryController>();
                   Get.to(() => OnlineAnimalHusbandryScreen(),
-                      arguments: [data.id]);
+                      arguments: [data]);
                 },
                 child: Text(
                   'ANIMAL HUSBANDRY',
@@ -462,7 +466,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (c, i) {
-                    var data = controller.husbandryList[i];
+                    var animal = controller.husbandryList[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -474,12 +478,12 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                 animalHusbandryController = Get.find();
                             animalHusbandryController.isEdit.value = true;
                             animalHusbandryController
-                                .getAnimalHusbandry(data.id!, () {
+                                .getAnimalHusbandry(animal.id!, () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
                               Get.to(() => OnlineAnimalHusbandryScreen(),
-                                  arguments: [data.farmers_id]);
+                                  arguments: [animal]);
                             }, () {
                               Loader.hide();
                               reusableWidget.rawSnackBar(
@@ -490,14 +494,14 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   ));
                             });
                           },
-                          leading: Text(data.location.toString()),
+                          leading: Text(animal.location.toString()),
                           trailing: IconButton(
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              openHusbandryDeleteDialog(data.id!, context);
+                              openHusbandryDeleteDialog(animal.id!, context);
                             },
                           )),
                     );
@@ -509,8 +513,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 shape: OutlineInputBorder(
                     borderSide: BorderSide(color: MyColors.deepGreen)),
                 onPressed: () {
-                  Get.to(() => OnlineAddSericultureScreen(),
-                      arguments: [data.id]);
+                  Get.to(() => OnlineAddSericultureScreen(), arguments: [data]);
                 },
                 child: Text(
                   'ADD SERICULTURE',
@@ -524,7 +527,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (c, i) {
-                    var data = controller.sericultureList[i];
+                    var seri = controller.sericultureList[i];
                     return Card(
                       elevation: 0,
                       color: const Color(0xfff1f1f1),
@@ -535,13 +538,13 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                             SericultureScreenController
                                 sericultureScreenController = Get.find();
                             sericultureScreenController.isEdit.value = true;
-                            sericultureScreenController.getSericulture(data.id!,
+                            sericultureScreenController.getSericulture(seri.id!,
                                 () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
                               Get.to(() => OnlineAddSericultureScreen(),
-                                  arguments: [data.farmers_id]);
+                                  arguments: [seri]);
                             }, () {
                               Loader.hide();
                               reusableWidget.rawSnackBar(
@@ -552,14 +555,14 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                   ));
                             });
                           },
-                          leading: Text(data.location.toString()),
+                          leading: Text(seri.location.toString()),
                           trailing: IconButton(
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              openSericultureDeleteDialog(data.id!, context);
+                              openSericultureDeleteDialog(seri.id!, context);
                             },
                           )),
                     );
@@ -618,7 +621,15 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                       Icons.warning,
                                       color: Colors.red,
                                     ))
-                                : openApprovalDialog(context);
+                                : data.status == 'Incomplete'
+                                    ? reusableWidget.rawSnackBar(
+                                        'Application form Incomplete',
+                                        const Icon(
+                                          Icons.warning,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    : openApprovalDialog(context);
                           },
                           child: Card(
                             elevation: 0,
@@ -637,7 +648,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                                   : false,
                                   onChanged: (val) {},
                                 ),
-                                const Text('Ready for Approval')
+                                const Text('Submit for Approval')
                               ],
                             ),
                           ),
@@ -763,7 +774,8 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           color: Colors.blue,
                         ));
                     controller.getAllFarmers('');
-                    Get.back();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   }, () {
                     Loader.hide();
                     reusableWidget.rawSnackBar(
@@ -798,7 +810,32 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                 child: const Text('No'),
               ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.lazyPut(() => FarmLandController());
+                  FarmLandController farmLandController = Get.find();
+                  farmLandController.deleteFarmLand(id, () {
+                    reusableWidget.loader(context);
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Successfully Deleted',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ));
+                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                      Navigator.pop(context);
+                    }, () {});
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Error Occured',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ));
+                  });
+                },
                 color: MyColors.deepGreen,
                 elevation: 0,
                 textColor: Colors.white,
@@ -879,6 +916,57 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                   HorticultureScreenController horticultureScreenController =
                       Get.find();
                   horticultureScreenController.deleteHorticulture(id, () {
+                    reusableWidget.loader(context);
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Deleted successfully',
+                        const Icon(
+                          Icons.check,
+                          color: Colors.blue,
+                        ));
+                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                      Navigator.pop(context);
+                    }, () {});
+                  }, () {
+                    Loader.hide();
+                    reusableWidget.rawSnackBar(
+                        'Error Occured!!',
+                        const Icon(
+                          Icons.warning,
+                          color: Colors.red,
+                        ));
+                  });
+                },
+                color: MyColors.deepGreen,
+                elevation: 0,
+                textColor: Colors.white,
+                child: const Text('Yes'),
+              ),
+            ],
+          );
+        });
+  }
+
+  openLandDeleteDialog(int id, BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: const Text('Are you sure?'),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Get.lazyPut(() => LandWaterScreenController());
+                  LandWaterScreenController landWaterScreenController =
+                      Get.find();
+                  landWaterScreenController.deleteLandWater(id, () {
                     reusableWidget.loader(context);
                   }, () {
                     Loader.hide();

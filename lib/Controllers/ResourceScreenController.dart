@@ -95,6 +95,134 @@ class ResourceScreenController extends GetxController {
     }
   }
 
+  cleateDatabaseTable() async {
+    await resourceServices.clearAllTable();
+  }
+
+  downloadResources(
+      Function onLoading, Function onSuccess, Function onError) async {
+    onLoading();
+    try {
+      var res = await resourceServices.getAllResources();
+      for (var data in res['subDivision']) {
+        var fa = SubDivisionModel(
+          id: data['id'],
+          sub_division_name: data['sub_division_name'],
+          district_id: data['district_id'],
+        );
+        await resourceServices.saveSubDivision(fa);
+      }
+      for (var data in res['rdBlock']) {
+        var da = RdBlockModel(
+            id: data['id'],
+            block_name: data['block_name'],
+            district_id: data['district_id']);
+        await resourceServices.saveRDBlock(da);
+      }
+      for (var data in res['villages']) {
+        var da = VillageModel(
+            id: data['id'],
+            village_name: data['village_name'],
+            village_lgd_code: data['village_lgd_code'],
+            block_id: data['block_id']);
+        await resourceServices.saveVillage(da);
+      }
+      for (var data in res['landHolding']) {
+        var land = LandHoldingModel(
+            id: data['id'], land_holding_name: data['land_holding_name']);
+        await resourceServices.saveLandHolding(land);
+      }
+      for (var data in res['ownershipType']) {
+        var ownership = OwnershipTypeModel(
+            id: data['id'], ownership_type_name: data['ownership_type_name']);
+        await resourceServices.saveOwnershipType(ownership);
+      }
+      for (var data in res['infrastructure']) {
+        var irr = IrrigationInfrastructureModel(
+            id: data['id'],
+            irrigation_infrastructures_name:
+                data['irrigation_infrastructures_name']);
+        await resourceServices.saveIrrigationInfrastructure(irr);
+      }
+      for (var data in res['equipments']) {
+        var farm = FarmEquipmentModel(
+            id: data['id'], equipment_name: data['equipment_name']);
+        await resourceServices.saveFarmEquipment(farm);
+      }
+      for (var data in res['kharifCrops']) {
+        var kharif = KharifCropModel(
+            id: data['id'], kharif_crops_name: data['kharif_crops_name']);
+        await resourceServices.saveKharifCrops(kharif);
+      }
+      for (var data in res['rabiCrops']) {
+        var rabi = RabiCropModel(
+            id: data['id'], rabi_crops_name: data['rabi_crops_name']);
+        await resourceServices.saveRabiCrops(rabi);
+      }
+      for (var data in res['schemes']) {
+        var scheme =
+            SchemeModel(id: data['id'], scheme_name: data['scheme_name']);
+        await resourceServices.saveScheme(scheme);
+      }
+      for (var data in res['orchards']) {
+        var orchards =
+            OrchardModel(id: data['id'], orchards_name: data['orchards_name']);
+        await resourceServices.saveOrchards(orchards);
+      }
+
+      for (var data in res['plantation']) {
+        var plantation = PlantationModel(
+            id: data['id'], plantation_name: data['plantation_name']);
+        await resourceServices.savePlantation(plantation);
+      }
+      for (var data in res['greenHouse']) {
+        var greenHouse = GreenHouseModel(id: data['id'], name: data['name']);
+        await resourceServices.saveGreenHouse(greenHouse);
+      }
+      for (var land in res['landCrops']) {
+        var data = LandCrops(id: land['id'], crop_name: land['crop_name']);
+        await resourceServices.saveLandCrop(data);
+      }
+      for (var fish in res['fish']) {
+        var data = FishModel(id: fish['id'], fish_name: fish['fish_name']);
+        await resourceServices.saveFish(data);
+      }
+      for (var livestock in res['livestock']) {
+        var data = LivestockModel(
+            id: livestock['id'], livestock_name: livestock['livestock_name']);
+        await resourceServices.saveLivestock(data);
+      }
+      for (var breed in res['typeOfBreed']) {
+        var data = TypeOfBreedModel(id: breed['id'], name: breed['name']);
+        await resourceServices.saveTypeOfBreed(data);
+      }
+      for (var farm in res['typeOfFarm']) {
+        var data = TypeOfFarmModel(id: farm['id'], name: farm['name']);
+        await resourceServices.saveTypeOfFarm(data);
+      }
+      for (var poultryBreed in res['typeOfPoultryBreed']) {
+        var data = TypeOfPoultryBreedModel(
+            id: poultryBreed['id'], name: poultryBreed['name']);
+        await resourceServices.savePoultryBreed(data);
+      }
+      for (var poultryFarm in res['typeOfPoultryFarm']) {
+        var data = TypeOfPoultryFarmModel(
+            id: poultryFarm['id'], name: poultryFarm['name']);
+        await resourceServices.savePoultryFarm(data);
+      }
+      for (var silk in res['silkworm']) {
+        var data =
+            SilkwormModel(id: silk['id'], silkworm_name: silk['silkworm_name']);
+        await resourceServices.saveSilkworm(data);
+      }
+      onSuccess();
+    } catch (ex) {
+      onError();
+      await resourceServices.clearAllTable();
+      print(ex);
+    }
+  }
+
   getAllResources() async {
     isDownloading.value = true;
     try {

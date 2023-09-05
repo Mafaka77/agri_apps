@@ -16,7 +16,7 @@ import '../../Models/RabiCropModel.dart';
 
 class OnlineAddHorticultureScreen extends StatelessWidget {
   OnlineAddHorticultureScreen({Key? key}) : super(key: key);
-  var farmerId = Get.arguments[0];
+  var data = Get.arguments[0];
   ReusableWidget reusableWidget = ReusableWidget();
   HorticultureScreenServices services = Get.find(tag: 'horticultureServices');
   OnlineHomeController homeController = Get.find();
@@ -26,6 +26,7 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
         init: HorticultureScreenController(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               elevation: 0,
               backgroundColor: MyColors.deepGreen,
@@ -50,8 +51,7 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20)),
                     minWidth: Get.width * 0.4,
                     onPressed: () {
-                      print(controller.greenHouse);
-                      // Get.back();
+                      Get.back();
                     },
                     child: Text(
                       'Back',
@@ -67,7 +67,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                           color: MyColors.deepGreen,
                           minWidth: Get.width * 0.4,
                           onPressed: () async {
-                            controller.updateHortiDetails(farmerId, () {
+                            controller.updateHortiDetails(
+                                data.id, data.farmers_id, () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
@@ -78,9 +79,9 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                                     Icons.check,
                                     color: Colors.blue,
                                   ));
-                              homeController
-                                  .getFarmerFarmDetails(farmerId, () {}, () {
-                                homeController.checkStatus(farmerId);
+                              homeController.getFarmerFarmDetails(
+                                  data.farmers_id, () {}, () {
+                                homeController.checkStatus(data.farmers_id);
                                 Navigator.pop(context);
                               }, () {});
                             }, () {
@@ -106,7 +107,7 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                           color: MyColors.deepGreen,
                           minWidth: Get.width * 0.4,
                           onPressed: () async {
-                            controller.submitHortiDetails(farmerId, () {
+                            controller.submitHortiDetails(data.id, () {
                               reusableWidget.loader(context);
                             }, () {
                               Loader.hide();
@@ -117,8 +118,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                                     color: Colors.blue,
                                   ));
                               homeController
-                                  .getFarmerFarmDetails(farmerId, () {}, () {
-                                homeController.checkStatus(farmerId);
+                                  .getFarmerFarmDetails(data.id, () {}, () {
+                                homeController.checkStatus(data.id);
                                 Navigator.pop(context);
                               }, () {});
                             }, () {

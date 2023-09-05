@@ -3,11 +3,16 @@ import 'package:agri_farmers_app/Models/FarmerModel.dart';
 import 'package:agri_farmers_app/Routes.dart';
 
 class OnlineHomeScreenServices extends BaseService {
-  Future<List<FarmerModel>> getAllFarmers(
-      int userId, int offset, int limit, String search) async {
+  Future<List<FarmerModel>> getAllFarmers(int userId, int offset, int limit,
+      String search, String sortBy, String filterBy) async {
     try {} catch (ex) {}
-    var response = await client.get(Routes.GET_ALL_FARMERS(userId),
-        data: {'offset': offset, 'limit': limit, 'search': search});
+    var response = await client.get(Routes.GET_ALL_FARMERS(userId), data: {
+      'offset': offset,
+      'limit': limit,
+      'search': search,
+      'sortBy': sortBy,
+      'filterBy': filterBy
+    });
     var data = response.data['data'];
     return FarmerModel.fromOnlineJsonList(data);
   }
@@ -25,6 +30,7 @@ class OnlineHomeScreenServices extends BaseService {
 
   Future checkStatus(int farmerId) async {
     var response = await client.get(Routes.CHECK_STATUS(farmerId));
+    return response.data;
   }
 
   Future checkVerification(int id) async {

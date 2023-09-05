@@ -1,14 +1,7 @@
-import 'package:agri_farmers_app/Controllers/BasicInfoController.dart';
-import 'package:agri_farmers_app/Controllers/OnlineHomeController.dart';
-import 'package:agri_farmers_app/Models/DistrictModel.dart';
-import 'package:agri_farmers_app/Models/FarmerCategoryModel.dart';
-import 'package:agri_farmers_app/Models/GenderModel.dart';
-import 'package:agri_farmers_app/Models/RdBlockModel.dart';
-import 'package:agri_farmers_app/Models/SubDivisionModel.dart';
-import 'package:agri_farmers_app/Models/VillageModel.dart';
+import 'package:agri_farmers_app/Controllers/Offline/OfflineBasicInfoController.dart';
+import 'package:agri_farmers_app/Controllers/OfflineDataController.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
-import 'package:agri_farmers_app/Services/BasicInfoServices.dart';
-import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
+import 'package:agri_farmers_app/Services/Offline/OfflineBasicInfoServices.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -17,22 +10,26 @@ import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
 import '../../Models/CasteModel.dart';
+import '../../Models/DistrictModel.dart';
+import '../../Models/FarmerCategoryModel.dart';
+import '../../Models/GenderModel.dart';
+import '../../Models/RdBlockModel.dart';
+import '../../Models/SubDivisionModel.dart';
+import '../../Models/VillageModel.dart';
 import '../../MyColors.dart';
 
-class OnlineAddBasicInfoScreen extends StatelessWidget {
-  OnlineAddBasicInfoScreen({Key? key}) : super(key: key);
+class OfflineAddBasicInfoScreen extends StatelessWidget {
+  OfflineAddBasicInfoScreen({Key? key}) : super(key: key);
+  OfflineBasicInfoServices services = Get.find(tag: 'offlineBasicInfoServices');
+  OfflineDataController dataController = Get.find();
   ReusableWidget reusableWidget = ReusableWidget();
-  HomeScreenServices screenServices = Get.find(tag: 'homeScreenServices');
-  BasicInfoServices basicInfoServices = Get.find(tag: 'basicInfoServices');
-  OnlineHomeController onlineHomeController = Get.find();
   var storage = const FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BasicInfoController>(
-        init: BasicInfoController(),
+    return GetBuilder<OfflineBasicInfoController>(
+        init: OfflineBasicInfoController(),
         builder: (controller) {
           return Scaffold(
-            resizeToAvoidBottomInset: false,
             appBar: AppBar(
                 elevation: 0,
                 leading: IconButton(
@@ -74,30 +71,30 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             color: MyColors.deepGreen,
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
-                              if (controller.formKey.currentState!.validate()) {
-                                controller.editBasicInfo(() {
-                                  reusableWidget.loader(context);
-                                }, (int farmerId) {
-                                  Loader.hide();
-                                  reusableWidget.rawSnackBar(
-                                      'Farmer Basic Info Updated',
-                                      const Icon(
-                                        Icons.check,
-                                        color: Colors.blue,
-                                      ));
-                                  onlineHomeController.getAllFarmers('');
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                }, () {
-                                  Loader.hide();
-                                  reusableWidget.rawSnackBar(
-                                      'Error Occured!! Try Again',
-                                      const Icon(
-                                        Icons.warning,
-                                        color: Colors.red,
-                                      ));
-                                });
-                              }
+                              // if (controller.formKey.currentState!.validate()) {
+                              //   controller.editBasicInfo(() {
+                              //     reusableWidget.loader(context);
+                              //   }, (int farmerId) {
+                              //     Loader.hide();
+                              //     reusableWidget.rawSnackBar(
+                              //         'Farmer Basic Info Updated',
+                              //         const Icon(
+                              //           Icons.check,
+                              //           color: Colors.blue,
+                              //         ));
+                              //     onlineHomeController.getAllFarmers('');
+                              //     Navigator.pop(context);
+                              //     Navigator.pop(context);
+                              //   }, () {
+                              //     Loader.hide();
+                              //     reusableWidget.rawSnackBar(
+                              //         'Error Occured!! Try Again',
+                              //         const Icon(
+                              //           Icons.warning,
+                              //           color: Colors.red,
+                              //         ));
+                              //   });
+                              // }
                             },
                             child: const Text(
                               'Update',
@@ -113,7 +110,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                controller.saveFarmerOnline(() {
+                                controller.saveFarmer(() {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -123,7 +120,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                                         Icons.check,
                                         color: Colors.blue,
                                       ));
-                                  onlineHomeController.getAllFarmers('');
+                                  dataController.getFarmers();
                                   Navigator.pop(context);
                                 }, () {
                                   Loader.hide();
@@ -147,37 +144,32 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.all(10),
                 child: Form(
                   key: controller.formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      reusableWidget.textBoxSpace(),
-                      Obx(
-                        () => TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Required';
-                            }
-                            return null;
-                          },
-                          controller: controller.nameController.value,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            focusedErrorBorder:
-                                reusableWidget.errorBorderStyle(),
-                            label: Text(
-                              'Full Name',
-                              style: reusableWidget.textBoxTextSyle(),
-                            ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required';
+                          }
+                          return null;
+                        },
+                        controller: controller.fullNameController,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          enabledBorder: reusableWidget.borderStyle(),
+                          focusedBorder: reusableWidget.borderStyle(),
+                          errorBorder: reusableWidget.errorBorderStyle(),
+                          focusedErrorBorder: reusableWidget.errorBorderStyle(),
+                          label: Text(
+                            'Full Name',
+                            style: reusableWidget.textBoxTextSyle(),
                           ),
-                          style: reusableWidget.textBoxTextSyle(),
                         ),
+                        style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
                       TextFormField(
@@ -224,7 +216,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var response = await screenServices.getAllCaste();
+                            var response = await services.getAllCaste();
                             var data = CasteModel.fromJsonList(response);
                             return data;
                           },
@@ -256,7 +248,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var response = await screenServices.getAllGender();
+                            var response = await services.getAllGender();
                             var data = GenderModel.fromJsonList(response);
                             return data;
                           },
@@ -444,7 +436,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           ),
                           asyncItems: (String filter) async {
                             var response =
-                                await screenServices.getAllFarmerCategory();
+                                await services.getAllFarmerCategory();
                             var data =
                                 FarmerCategoryModel.fromJsonList(response);
                             return data;
@@ -497,24 +489,6 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         ),
                       ),
                       reusableWidget.textBoxSpace(),
-                      Obx(() {
-                        return controller.isFarmingMainIncome.value == 'No'
-                            ? TextFormField(
-                                controller: controller.occupationTextController,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  enabledBorder: reusableWidget.borderStyle(),
-                                  focusedBorder: reusableWidget.borderStyle(),
-                                  label: Text(
-                                    'Other Income',
-                                    style: reusableWidget.textBoxTextSyle(),
-                                  ),
-                                ),
-                                style: reusableWidget.textBoxTextSyle(),
-                              )
-                            : Container();
-                      }),
-                      reusableWidget.textBoxSpace(),
                       const Text('Address'),
                       reusableWidget.textBoxSpace(),
                       Obx(
@@ -540,7 +514,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           asyncItems: (String filter) async {
                             var districtId =
                                 await storage.read(key: 'district_id');
-                            var res = await screenServices
+                            var res = await services
                                 .getDistrict(int.parse(districtId.toString()));
                             var data = DistrictModel.fromJsonList(res);
                             return data;
@@ -574,7 +548,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var response = await screenServices.getSubDivision(
+                            var response = await services.getSubDivision(
                                 int.parse(controller
                                     .districtIdForSubDivision.value
                                     .toString()));
@@ -608,7 +582,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var response = await basicInfoServices.getRdBlock(
+                            var response = await services.getRdBlock(
                                 controller.districtIdForBlock.value);
                             var data = RdBlockModel.fromJsonList(response);
                             return data;
@@ -642,7 +616,7 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             ),
                           ),
                           asyncItems: (String filter) async {
-                            var response = await basicInfoServices
+                            var response = await services
                                 .getVillage(controller.blockIdForVillage.value);
                             var data = VillageModel.fromJsonList(response);
                             return data;
@@ -740,9 +714,6 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         ),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
-                      reusableWidget.textBoxSpace(),
-                      reusableWidget.textBoxSpace(),
-                      reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),

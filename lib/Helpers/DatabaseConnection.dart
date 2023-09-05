@@ -49,5 +49,12 @@ class DatabaseConnection {
     await database.execute(AnimalHusbandry().typeOfPoultryBreedTable);
     await database.execute(AnimalHusbandry().typeOfPoultryFarmTable);
     await database.execute(SericultureData().silkwormTable);
+
+    //AGRICULTURE LAND
+    await database.execute(AgriLandData().farmerAgricultureLand);
+    await database.execute(AgriLandData().farmerFarmEquipment);
+    await database.execute(AgriLandData().farmerIrrigationInfrastructure);
+    await database.execute(AgriLandData().farmerKharifCrops);
+    await database.execute(AgriLandData().farmerRabiCrops);
   }
 }

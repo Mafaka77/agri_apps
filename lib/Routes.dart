@@ -1,6 +1,6 @@
 class Routes {
-  // static String BASE_URL = 'http://192.168.1.68:8000/api/';
-  static String BASE_URL = 'http://10.180.243.118:8000/api/';
+  static String BASE_URL = 'http://10.180.243.102:8000/api/';
+  // static String BASE_URL = 'https://argi.stagingmsegs.in/api/';
 
   //LOGIN
   static String LOGIN = '${BASE_URL}login';
@@ -23,6 +23,7 @@ class Routes {
   static String GET_HORTICULTURE_DATA = '${BASE_URL}get-horticulture-data';
   static String GET_LAND_CROPS = '${BASE_URL}get-land-crops';
   static String GET_ALL_RESOURCES = '${BASE_URL}get-all-resources';
+  static String CHECK_BUTTON = '${BASE_URL}check-button';
 
   //ONLINE DATA
   static String GET_ALL_FARMERS(id) => '${BASE_URL}get-all-farmers/$id';
@@ -36,6 +37,9 @@ class Routes {
       '${BASE_URL}get-agri-farm-detail/$id';
   static String UPDATE_FARMER_AGRI_LAND(id) =>
       '${BASE_URL}update-farm-detail/$id';
+
+  static String DELETE_FARMER_AGRI_LAND(id) =>
+      '${BASE_URL}delete-farm-land/$id';
   static String UPLOAD_ADDITIONAL_FILE = '${BASE_URL}upload-additional-file';
   static String SUBMIT_ADDITIONAL_DETAILS =
       '${BASE_URL}submit-additional-details';
@@ -53,6 +57,7 @@ class Routes {
   static String CHECK_VERIFICATION(int id) =>
       '${BASE_URL}check-verification/$id';
   static String SEND_FOR_APPROVAL(id) => '${BASE_URL}send-for-approval/$id';
+  static String GET_PROFILE(id) => '${BASE_URL}get-profile/$id';
 
   //HORTICULTURE
   static String SUBMIT_HORTI_DETAILS = '${BASE_URL}submit-farmer-horticulture';
@@ -67,7 +72,7 @@ class Routes {
   static String SUBMIT_LAND_WATER = '${BASE_URL}submit-land-water';
   static String GET_LAND_WATER(id) => '${BASE_URL}get-land-water/$id';
   static String UPDATE_LAND_WATER(id) => '${BASE_URL}update-land-water/$id';
-
+  static String DELETE_LAND_WATER(id) => '${BASE_URL}delete-land-water/$id';
   //FISHERIES
   static String SUBMIT_FISHERIES = '${BASE_URL}submit-fisheries';
   static String GET_FISHERIE_DATA(id) => '${BASE_URL}get-fisheries/$id';

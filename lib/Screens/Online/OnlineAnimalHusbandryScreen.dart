@@ -17,7 +17,7 @@ import '../../MyColors.dart';
 class OnlineAnimalHusbandryScreen extends StatelessWidget {
   OnlineAnimalHusbandryScreen({Key? key}) : super(key: key);
   ReusableWidget reusableWidget = ReusableWidget();
-  var farmerId = Get.arguments[0];
+  var data = Get.arguments[0];
   AnimalHusbandryServices services = Get.find(tag: 'animalHusbandryServices');
   OnlineHomeController homeController = Get.find();
   @override
@@ -57,7 +57,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                controller.updateAnimalHusbandry(farmerId, () {
+                                controller.updateAnimalHusbandry(
+                                    data.id, data.farmers_id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -69,7 +70,7 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                                     ),
                                   );
                                   homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                      data.farmers_id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {
@@ -98,8 +99,7 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () {
                               if (controller.formKey.currentState!.validate()) {
-                                print('hello');
-                                controller.submitHusbandry(farmerId, () {
+                                controller.submitHusbandry(data.id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -110,8 +110,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                                       color: Colors.blue,
                                     ),
                                   );
-                                  homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                  homeController
+                                      .getFarmerFarmDetails(data.id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {

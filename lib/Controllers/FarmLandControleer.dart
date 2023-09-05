@@ -175,7 +175,6 @@ class FarmLandController extends GetxController {
 
     try {
       var data = await services.getFarmerAgriLand(id);
-      print(data.oil_palm_plantation);
       agriFarmID.value = data.id!;
       centralFarmerIdTextController.text = data.farmer_agri_id!;
       landOwnerNameTextController.text = data.land_owner_name!;
@@ -227,7 +226,7 @@ class FarmLandController extends GetxController {
     }
   }
 
-  editAgriFarm(int farmerId, Function onLoading, Function onSuccess,
+  editAgriFarm(int id, int farmerId, Function onLoading, Function onSuccess,
       Function onError) async {
     onLoading();
     var land = AgricultureLandModel();
@@ -253,8 +252,8 @@ class FarmLandController extends GetxController {
     land.rabi_total_area = rabiTotalArea.text;
     land.kharif_total_area = kharifTotalArea.text;
     try {
-      var data = await services.updateFarmerAgriLand(agriFarmID.value, land,
-          infrastructure, equipment, kharifCrop, rabiCrop);
+      var data = await services.updateFarmerAgriLand(
+          id, land, infrastructure, equipment, kharifCrop, rabiCrop);
       onSuccess();
     } catch (ex) {
       onError();
@@ -292,6 +291,18 @@ class FarmLandController extends GetxController {
           infrastructure, equipment, kharifCrop, rabiCrop);
       onSuccess();
     } catch (ex) {
+      onError();
+    }
+  }
+
+  deleteFarmLand(
+      int id, Function onLoading, Function onSuccess, Function onError) async {
+    onLoading();
+    try {
+      var data = await services.deleteFarm(id);
+      onSuccess();
+    } catch (ex) {
+      print(ex);
       onError();
     }
   }

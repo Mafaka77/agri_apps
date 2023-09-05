@@ -42,6 +42,7 @@ class OnlineAddFarmScreen extends StatelessWidget {
         init: FarmLandController(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               elevation: 0,
               backgroundColor: MyColors.deepGreen,
@@ -75,7 +76,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                             color: MyColors.deepGreen,
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
-                              controller.editAgriFarm(data.farmers_id, () {
+                              controller.editAgriFarm(data.id, data.farmers_id,
+                                  () {
                                 reusableWidget.loader(context);
                               }, () {
                                 Loader.hide();
@@ -129,6 +131,10 @@ class OnlineAddFarmScreen extends StatelessWidget {
                                   );
                                   homeController
                                       .getFarmerFarmDetails(data.id, () {}, () {
+                                    homeController.checkStatus(data.id);
+                                    homeController.checkVerification(
+                                        data.id, () {}, () {}, () {});
+                                    homeController.getAllFarmers('');
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {
@@ -828,7 +834,7 @@ class OnlineAddFarmScreen extends StatelessWidget {
                             focusedBorder: reusableWidget.borderStyle(),
                             contentPadding: const EdgeInsets.all(10),
                             errorBorder: reusableWidget.errorBorderStyle(),
-                            labelText: 'Aadhaar Verification Type',
+                            labelText: 'Oil Palm Plantation',
                             labelStyle: reusableWidget.textBoxTextSyle(),
                           ),
                         ),

@@ -1,9 +1,10 @@
 import 'package:agri_farmers_app/Controllers/OfflineDataController.dart';
-import 'package:agri_farmers_app/Screens/AddBasicInfoScreen.dart';
+import 'package:agri_farmers_app/Screens/Offline/OfflineAddBasicInfoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../MyColors.dart';
+import '../Screens/Offline/OfflineDetailScreen.dart';
 
 class OfflineDataWidget extends StatelessWidget {
   const OfflineDataWidget({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class OfflineDataWidget extends StatelessWidget {
               elevation: 0,
               color: MyColors.deepGreen,
               onPressed: () {
-                Get.to(() => AddBasicInfoScreen());
+                Get.to(() => OfflineAddBasicInfoScreen());
               },
               child: const Text(
                 'Add Farmers Offline',
@@ -50,10 +51,10 @@ class OfflineDataWidget extends StatelessWidget {
                               onTap: () async {
                                 await controller
                                     .getFarmerBankDetails(data.ids!);
-                                // Get.to(
-                                //   () => OfflineDetailScreen(),
-                                //   arguments: [data],
-                                // );
+                                Get.to(
+                                  () => OfflineDetailScreen(),
+                                  arguments: [data],
+                                );
                               },
                               dense: true,
                               leading: const Icon(Icons.person),

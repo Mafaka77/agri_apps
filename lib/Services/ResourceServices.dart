@@ -106,6 +106,13 @@ class ResourceServices extends BaseService {
     await repository.deleteTable('plantations');
     await repository.deleteTable('green_house_plants');
     await repository.deleteTable('land_crops');
+    await repository.deleteTable('fish');
+    await repository.deleteTable('livestocks');
+    await repository.deleteTable('type_of_breeds');
+    await repository.deleteTable('type_of_farms');
+    await repository.deleteTable('type_of_poultry_breeds');
+    await repository.deleteTable('type_of_poultry_farms');
+    await repository.deleteTable('silkworms');
   }
 
   getAllSubDivision() async {

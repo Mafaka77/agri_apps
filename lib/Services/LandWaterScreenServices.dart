@@ -52,4 +52,13 @@ class LandWaterScreenServices extends BaseService {
       return Future.error(ex);
     }
   }
+
+  Future deleteLandWater(int id) async {
+    try {
+      var response = await client.delete(Routes.DELETE_LAND_WATER(id));
+      return response.data;
+    } catch (ex) {
+      return Future.error(ex);
+    }
+  }
 }

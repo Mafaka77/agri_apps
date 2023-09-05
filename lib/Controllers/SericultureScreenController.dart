@@ -61,20 +61,19 @@ class SericultureScreenController extends GetxController {
     }
   }
 
-  void updateSericulture(int farmerId, Function onLoading, Function onSuccess,
-      Function onError) async {
+  void updateSericulture(int id, int farmerId, Function onLoading,
+      Function onSuccess, Function onError) async {
     onLoading();
     try {
       var seri = SericultureModel();
-      seri.id = ids.value;
+      seri.id = id;
       seri.farmers_id = farmerId;
       seri.sericulture_id = sericultureId.text;
       seri.location = location.text;
       seri.total_area = totalArea.text;
       seri.size_of_rearing_unit = sizeOfRearingUnit.text;
       seri.plantation_total_area = plantationTotalArea.text;
-      var data =
-          await services.updateSericulture(ids.value, seri, silkwormRearedList);
+      var data = await services.updateSericulture(id, seri, silkwormRearedList);
       onSuccess();
     } catch (ex) {
       onError();

@@ -1,12 +1,11 @@
 import 'package:agri_farmers_app/Controllers/HomeController.dart';
 import 'package:agri_farmers_app/MyColors.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
-import 'package:agri_farmers_app/Screens/LoginScreen.dart';
+import 'package:agri_farmers_app/Screens/Online/ProfileScreen.dart';
 import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
 import 'package:agri_farmers_app/Widgets/OfflineDataWidget.dart';
 import 'package:agri_farmers_app/Widgets/OnlineDataWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,57 +24,61 @@ class HomeScreen extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'FARMER REGISTRATION',
-                    style: TextStyle(
-                        color: MyColors.deepGreen,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  const Text(
-                    'Agriculture Department,Mizoram',
-                    style: TextStyle(color: Colors.black, fontSize: 11),
+                  Image(
+                    height: Get.height * 0.03,
+                    image: const AssetImage(
+                      'images/agri.png',
+                    ),
                   ),
                 ],
               ),
               actions: [
-                PopupMenuButton(
-                  icon: Icon(
-                    Icons.more_vert_sharp,
-                    color: MyColors.deepGreen,
+                IconButton(
+                  color: MyColors.deepGreen,
+                  onPressed: () {
+                    Get.to(() => ProfileScreen());
+                  },
+                  icon: const Icon(
+                    Icons.person,
                   ),
-                  onSelected: (value) {
-                    if (value == '0') {
-                      logoutDialog(context);
-                    }
-                  },
-                  itemBuilder: (BuildContext bc) {
-                    return [
-                      const PopupMenuItem(
-                        value: '0',
-                        child: Text(
-                          "Logout",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                      // const PopupMenuItem(
-                      //   value: '/about',
-                      //   child: Text("About"),
-                      // ),
-                      // const PopupMenuItem(
-                      //   value: '/contact',
-                      //   child: Text("Contact"),
-                      // )
-                    ];
-                  },
                 )
+                // PopupMenuButton(
+                //   icon: Icon(
+                //     Icons.more_vert_sharp,
+                //     color: MyColors.deepGreen,
+                //   ),
+                //   onSelected: (value) {
+                //     if (value == '0') {
+                //       // logoutDialog(context);
+                //     }
+                //   },
+                //   itemBuilder: (BuildContext bc) {
+                //     return [
+                //       const PopupMenuItem(
+                //         value: '0',
+                //         child: Text(
+                //           "Logout",
+                //           style: TextStyle(fontSize: 14),
+                //         ),
+                //       ),
+                //       // const PopupMenuItem(
+                //       //   value: '/about',
+                //       //   child: Text("About"),
+                //       // ),
+                //       // const PopupMenuItem(
+                //       //   value: '/contact',
+                //       //   child: Text("Contact"),
+                //       // )
+                //     ];
+                //   },
+                // )
               ],
             ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       // Obx(
                       //   () => MaterialButton(
@@ -140,38 +143,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        });
-  }
-
-  logoutDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (c) {
-          return AlertDialog(
-            title: const Text(
-              'Logout?',
-              style: TextStyle(fontSize: 14),
-            ),
-            actions: [
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('No'),
-              ),
-              MaterialButton(
-                onPressed: () async {
-                  var storage = const FlutterSecureStorage();
-                  await storage.deleteAll();
-                  Get.offAll(() => LoginScreen());
-                },
-                color: MyColors.deepGreen,
-                elevation: 0,
-                textColor: Colors.white,
-                child: const Text('Yes'),
-              ),
-            ],
           );
         });
   }

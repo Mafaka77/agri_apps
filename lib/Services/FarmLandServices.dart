@@ -108,4 +108,16 @@ class FarmLandServices extends BaseService {
       print(ex);
     }
   }
+
+  Future deleteFarm(int id) async {
+    try {
+      var response = await client.delete(Routes.DELETE_FARMER_AGRI_LAND(id));
+      print(response.statusCode);
+
+      return response.data;
+    } catch (ex) {
+      print(ex);
+      return Future.error(ex);
+    }
+  }
 }

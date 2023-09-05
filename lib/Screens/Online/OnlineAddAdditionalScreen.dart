@@ -27,6 +27,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
         init: AdditionalScreenController(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               backgroundColor: MyColors.deepGreen,
               elevation: 0,
@@ -119,6 +120,9 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                                   homeController
                                       .getFarmerFarmDetails(data.id, () {}, () {
                                     homeController.checkStatus(data.id);
+                                    homeController.checkVerification(
+                                        data.id, () {}, () {}, () {});
+                                    homeController.getAllFarmers('');
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {
@@ -165,7 +169,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                           enabledBorder: reusableWidget.borderStyle(),
                           focusedBorder: reusableWidget.borderStyle(),
                           label: Text(
-                            'Ration Card Number *',
+                            'Ration Card Number',
                             style: reusableWidget.textBoxTextSyle(),
                           ),
                         ),

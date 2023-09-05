@@ -67,7 +67,6 @@ class AnimalHusbandryController extends GetxController {
     onLoading();
     try {
       var data = await services.getAnimalHusbandry(id);
-      ids.value = data.id!;
       husbandryId.text = data.husbandry_id!;
       locationText.text = data.location!;
       adultMaleText.text = data.adult_male.toString();
@@ -107,13 +106,13 @@ class AnimalHusbandryController extends GetxController {
     }
   }
 
-  void updateAnimalHusbandry(int farmerId, Function onLoading,
+  void updateAnimalHusbandry(int id, int farmerId, Function onLoading,
       Function onSuccess, Function onError) async {
     onLoading();
     try {
       var t = (adultMale.value + adultFemale.value + youngStock.value);
       var hus = AnimalHusbandryModel();
-      hus.id = ids.value;
+      hus.id = id;
       hus.farmers_id = farmerId;
       hus.husbandry_id = husbandryId.text;
       hus.location = locationText.text;
@@ -123,7 +122,7 @@ class AnimalHusbandryController extends GetxController {
       hus.total = t;
       hus.no_of_poultry = int.parse(noOfPoultryText.text);
       var data = await services.updataAnimalHusbandry(
-          ids.value,
+          id,
           hus,
           livestockList,
           typeOfFarmList,

@@ -35,7 +35,7 @@ class FarmerSchemeApplied {
       additional_farmer_details_id:
           map['additional_farmer_details_id']?.toInt(),
       availed: map['availed']?.toInt(),
-      amount: map['amount'],
+      amount: map['amount'] ?? '',
       schemeModel: SchemeModel.fromMap(map['schemes']),
     );
   }

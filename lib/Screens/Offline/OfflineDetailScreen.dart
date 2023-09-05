@@ -1,7 +1,7 @@
 import 'package:agri_farmers_app/Controllers/OfflineDataController.dart';
 import 'package:agri_farmers_app/MyColors.dart';
 import 'package:agri_farmers_app/ReusableWidget.dart';
-import 'package:agri_farmers_app/Screens/AddFarmScreen.dart';
+import 'package:agri_farmers_app/Screens/Offline/OfflineAddFarmScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +15,13 @@ class OfflineDetailScreen extends GetView<OfflineDataController> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: MyColors.deepGreen,
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -35,7 +42,10 @@ class OfflineDetailScreen extends GetView<OfflineDataController> {
               elevation: 0,
               color: MyColors.deepGreen,
               onPressed: () {
-                Get.to(() => AddFarmScreen(), arguments: [data]);
+                Get.to(
+                  () => OfflineAddFarmScreen(),
+                  arguments: [data],
+                );
               },
               child: const Text(
                 'ADD FARM AND AGRICULTURE',

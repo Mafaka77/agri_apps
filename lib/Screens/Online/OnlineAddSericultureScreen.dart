@@ -12,7 +12,7 @@ import '../../MyColors.dart';
 
 class OnlineAddSericultureScreen extends StatelessWidget {
   OnlineAddSericultureScreen({Key? key}) : super(key: key);
-  var farmerId = Get.arguments[0];
+  var data = Get.arguments[0];
   ReusableWidget reusableWidget = ReusableWidget();
   SericultureScreenServices services =
       Get.find(tag: 'sericultureScreenServices');
@@ -54,7 +54,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                controller.updateSericulture(farmerId, () {
+                                controller.updateSericulture(
+                                    data.id, data.farmers_id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -66,7 +67,7 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                                     ),
                                   );
                                   homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                      data.farmers_id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {
@@ -95,7 +96,7 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                             minWidth: Get.width * 0.4,
                             onPressed: () async {
                               if (controller.formKey.currentState!.validate()) {
-                                controller.submitSericulture(farmerId, () {
+                                controller.submitSericulture(data.id, () {
                                   reusableWidget.loader(context);
                                 }, () {
                                   Loader.hide();
@@ -106,8 +107,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                                       color: Colors.blue,
                                     ),
                                   );
-                                  homeController.getFarmerFarmDetails(
-                                      farmerId, () {}, () {
+                                  homeController
+                                      .getFarmerFarmDetails(data.id, () {}, () {
                                     Navigator.pop(context);
                                   }, () {});
                                 }, () {

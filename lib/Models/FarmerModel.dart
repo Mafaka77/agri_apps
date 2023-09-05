@@ -121,10 +121,10 @@ class FarmerModel {
       'sub_division_id': sub_division_id,
       'block_id': block_id,
       'village_id': village_id,
-      'bank_name': bank_name,
-      'branch_name': branch_name,
-      'account_number': account_number,
-      'ifsc_code': ifsc_code,
+      // 'bank_name': bank_name,
+      // 'branch_name': branch_name,
+      // 'account_number': account_number,
+      // 'ifsc_code': ifsc_code,
     };
   }
 

@@ -17,6 +17,7 @@ class OfflineDataController extends GetxController {
   Future getFarmers() async {
     var farmers = await services.getAllFarmers();
     var data = FarmerModel.fromJsonList(farmers);
+    farmerList.clear();
     farmerList.addAll(data);
   }
 

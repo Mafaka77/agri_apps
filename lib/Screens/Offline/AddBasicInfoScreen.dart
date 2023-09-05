@@ -15,8 +15,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
-import '../Models/CasteModel.dart';
-import '../MyColors.dart';
+import '../../Models/CasteModel.dart';
+import '../../MyColors.dart';
 
 class AddBasicInfoScreen extends StatelessWidget {
   AddBasicInfoScreen({Key? key}) : super(key: key);
@@ -62,6 +62,7 @@ class AddBasicInfoScreen extends StatelessWidget {
                           },
                           controller: controller.nameController.value,
                           decoration: InputDecoration(
+                            isDense: true,
                             enabledBorder: reusableWidget.borderStyle(),
                             focusedBorder: reusableWidget.borderStyle(),
                             errorBorder: reusableWidget.errorBorderStyle(),
@@ -75,27 +76,25 @@ class AddBasicInfoScreen extends StatelessWidget {
                         ),
                       ),
                       reusableWidget.textBoxSpace(),
-                      SizedBox(
-                        height: Get.height * 0.06,
-                        child: TextFormField(
-                          validator: (val) =>
-                              val != '' ? null : 'Required field *',
-                          onTap: () {
-                            controller.pickDOB(context);
-                          },
-                          controller: controller.dobTextController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              focusedErrorBorder:
-                                  reusableWidget.errorBorderStyle(),
-                              labelText: 'Date of Birth',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                              suffixIcon:
-                                  const Icon(Icons.calendar_today_outlined)),
-                        ),
+                      TextFormField(
+                        validator: (val) =>
+                            val != '' ? null : 'Required field *',
+                        onTap: () {
+                          controller.pickDOB(context);
+                        },
+                        controller: controller.dobTextController,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder: reusableWidget.borderStyle(),
+                            focusedBorder: reusableWidget.borderStyle(),
+                            errorBorder: reusableWidget.errorBorderStyle(),
+                            focusedErrorBorder:
+                                reusableWidget.errorBorderStyle(),
+                            labelText: 'Date of Birth',
+                            labelStyle: reusableWidget.textBoxTextSyle(),
+                            suffixIcon:
+                                const Icon(Icons.calendar_today_outlined)),
                       ),
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<CasteModel>(

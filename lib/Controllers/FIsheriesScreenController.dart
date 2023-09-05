@@ -78,13 +78,13 @@ class FisheriesScreenController extends GetxController {
     }
   }
 
-  updateFisheries(int farmerId, Function onLoading, Function onSuccess,
+  updateFisheries(int id, int farmerId, Function onLoading, Function onSuccess,
       Function onError) async {
     onLoading();
 
     try {
       var fish = FisheriesModel();
-      fish.id = f_id.value;
+      fish.id = id;
       fish.fisheries_id = fisherID.text;
       fish.location = location.text;
       fish.acres_or_hectares = 'Acres';
@@ -95,8 +95,7 @@ class FisheriesScreenController extends GetxController {
       fish.total_area = totalAreaSown.text;
       fish.fish_hatchery = fishHatchery.value;
       fish.farmers_id = farmerId;
-      var data =
-          await services.updateFisheries(f_id.value, fish, fishCulturedList);
+      var data = await services.updateFisheries(id, fish, fishCulturedList);
       onSuccess();
     } catch (ex) {
       onError();

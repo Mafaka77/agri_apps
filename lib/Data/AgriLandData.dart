@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS farmer_agriculture_land_details(
   longitude VARCHAR,
   altitude VARCHAR,
   landholding_documents_number VARCHAR,
-  landholding_file TEXT,
+  landholding_file VARCHAR,
   other_irrigation_infrastructure VARCHAR,
   other_farm_equipment VARCHAR,
   kharif_acres_or_hectares VARCHAR,

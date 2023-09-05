@@ -59,7 +59,6 @@ class OnlineHomeController extends GetxController {
     onLoading();
     try {
       var data = await services.sendForApproval(id);
-      print(data);
       verification.value = data;
       onSuccess();
     } catch (ex) {
@@ -69,6 +68,7 @@ class OnlineHomeController extends GetxController {
 
   checkStatus(int id) async {
     var data = await services.checkStatus(id);
+    print(data);
   }
 
   getAllFarmers(String search) async {
@@ -77,8 +77,8 @@ class OnlineHomeController extends GetxController {
     int limit = farmerLimit.value;
     try {
       var userId = await storage.read(key: 'userId');
-      var data = await services.getAllFarmers(
-          int.parse(userId.toString()), offset, limit, search);
+      var data = await services.getAllFarmers(int.parse(userId.toString()),
+          offset, limit, search, sortBy.value, filterBy.value);
       onlineFarmerList.clear();
       onlineFarmerList.addAll(data);
       isDataLoading.value = false;
@@ -128,8 +128,14 @@ class OnlineHomeController extends GetxController {
     farmerLimit.value = farmerLimit.value + 10;
     try {
       var userId = await storage.read(key: 'userId');
-      var data = await services.getAllFarmers(int.parse(userId.toString()),
-          farmerOffset.value, farmerLimit.value, '');
+      var data = await services.getAllFarmers(
+        int.parse(userId.toString()),
+        farmerOffset.value,
+        farmerLimit.value,
+        searchTextController.text,
+        sortBy.value,
+        filterBy.value,
+      );
       if (data.isEmpty) {
         farmerOffset.value -= 10;
         farmerLimit.value -= 10;

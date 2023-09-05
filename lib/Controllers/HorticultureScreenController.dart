@@ -93,12 +93,12 @@ class HorticultureScreenController extends GetxController {
     }
   }
 
-  updateHortiDetails(int farmerId, Function onLoading, Function onSuccess,
-      Function onError) async {
+  updateHortiDetails(int id, int farmerId, Function onLoading,
+      Function onSuccess, Function onError) async {
     onLoading();
     try {
       var horti = HorticultureModel();
-      horti.id = hortiId.value;
+      horti.id = id;
       horti.farmers_id = farmerId;
       horti.farmer_horticulture_id = hortiFarmerIdTextController.text;
       horti.location = locationTextController.text;
@@ -107,8 +107,8 @@ class HorticultureScreenController extends GetxController {
       horti.rabi_acres_or_hectares = 'Acres';
       horti.rabi_total_area = rabiTotalAreaTextController.text;
       horti.total_greenhouse_area = greenHouseTotalAreaTextController.text;
-      var data = await services.updateHortiDetails(hortiId.value, horti,
-          kharifCrops, rabiCrops, orchards, plantation, greenHouse);
+      var data = await services.updateHortiDetails(
+          id, horti, kharifCrops, rabiCrops, orchards, plantation, greenHouse);
       onSuccess();
     } catch (ex) {
       onError();
