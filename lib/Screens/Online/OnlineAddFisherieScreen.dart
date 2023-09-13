@@ -154,16 +154,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                     children: [
                       TextFormField(
                         controller: controller.fisherID,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Fisheries ID',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Fisheries ID'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -175,32 +167,16 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.location,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Location *',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Location *'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.nurseryPondText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Nursery Pond',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Nursery Pond'),
                         style: const TextStyle(fontSize: 13),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -215,16 +191,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.rearingPondText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Rearing Pond',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Rearing Pond'),
                         style: const TextStyle(fontSize: 13),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -238,16 +206,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.grewOutPondText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Grew Out Pond',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Grew Out Pond'),
                         style: const TextStyle(fontSize: 13),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -279,16 +239,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                         },
                         keyboardType: TextInputType.number,
                         controller: controller.totalAreaSown,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Total Area Sown *',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Total Area Sown *'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -300,16 +252,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItems: controller.fishCulturedData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Type of fish Cultured *',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Type of fish Cultured *'),
                         asyncItems: (String filter) async {
                           var response = await services.getFish();
                           var data = FishModel.fromJsonList(response);
@@ -335,17 +279,8 @@ class OnlineAddFisherieScreen extends StatelessWidget {
                           "Cemented",
                           "FRP Hatchery",
                         ],
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            labelText: 'Fish Hatchery',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Fish Hatchery'),
                         onChanged: (val) {
                           controller.fishHatchery.value = val.toString();
                         },

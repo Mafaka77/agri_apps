@@ -151,16 +151,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                     children: [
                       TextFormField(
                         controller: controller.hortiFarmerIdTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Farmer Horticulture ID',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Farmer Horticulture ID'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -172,16 +164,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.locationTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Location *',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Location *'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -191,16 +175,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<KharifCropModel>.multiSelection(
                         selectedItems: controller.kharifCropsData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Kharif Crops',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Kharif Crops'),
                         asyncItems: (String filter) async {
                           var response = await services.getKharifCrops();
                           var data = KharifCropModel.fromJsonList(response);
@@ -217,15 +193,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.kharifTotalAreaTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Farm Area(Kharif)',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Farm Area(Kharif)'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -233,13 +202,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                         selectedItems: controller.rabiCropsData,
                         dropdownDecoratorProps: DropDownDecoratorProps(
                           baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Rabi Crops',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
+                          dropdownSearchDecoration:
+                              reusableWidget.textBoxDecoration('Rabi Crops'),
                         ),
                         asyncItems: (String filter) async {
                           var response = await services.getRabiCrops();
@@ -257,15 +221,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.rabiTotalAreaTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Farm Area(Rabi)',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Farm Area(Rabi)'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -275,16 +232,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<OrchardModel>.multiSelection(
                         selectedItems: controller.orchardsData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Orchards',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Orchards'),
                         asyncItems: (String filter) async {
                           var response = await services.getOrchards();
                           var data = OrchardModel.fromJsonList(response);
@@ -300,16 +249,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<PlantationModel>.multiSelection(
                         selectedItems: controller.plantationData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Plantation',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Plantation'),
                         asyncItems: (String filter) async {
                           var response = await services.getPlantation();
                           var data = PlantationModel.fromJsonList(response);
@@ -327,16 +268,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<GreenHouseModel>.multiSelection(
                         selectedItems: controller.greenHouseData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Plants Grown',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Plants Grown'),
                         asyncItems: (String filter) async {
                           var response = await services.getGreenHousePlant();
                           var data = GreenHouseModel.fromJsonList(response);
@@ -354,15 +287,8 @@ class OnlineAddHorticultureScreen extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         controller:
                             controller.greenHouseTotalAreaTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Total Greenhouse Area',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Total Greenhouse Area'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),

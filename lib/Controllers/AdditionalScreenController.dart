@@ -123,7 +123,6 @@ class AdditionalScreenController extends GetxController {
       additional.farmers_id = farmerId;
       var data =
           await services.submitAdditionalDetails(additional, schemeApplied);
-      print(data);
       onSuccess();
     } catch (ex) {
       onError();
@@ -149,6 +148,7 @@ class AdditionalScreenController extends GetxController {
       bankPassbookFileTextController.text = data.bank_passbook_path!;
       dateTextController.text = data.date_of_data_collection!;
       remarksTextController.text = data.remarks!;
+      print(kccCardNumberTextController.text);
       getFarmerScheme(data.id!);
       isEdit.value = true;
       onSuccess();

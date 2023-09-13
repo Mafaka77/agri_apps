@@ -1,5 +1,5 @@
 class Routes {
-  static String BASE_URL = 'http://10.180.243.102:8000/api/';
+  static String BASE_URL = 'http://10.180.243.113:8000/api/';
   // static String BASE_URL = 'https://argi.stagingmsegs.in/api/';
 
   //LOGIN

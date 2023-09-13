@@ -31,6 +31,11 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: MyColors.deepGreen,
               elevation: 0,
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded)),
             ),
             bottomSheet: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -163,16 +168,8 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.rationCardNumberTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Ration Card Number',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Ration Card Number'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -251,15 +248,8 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                           maxHeight: Get.height * 0.08,
                         ),
                         child: DropdownSearch<SchemeModel>(
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Scheme Name',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps:
+                              reusableWidget.dropDownDecoration('Scheme Name'),
                           asyncItems: (String filter) async {
                             var response = await services.getScheme();
                             var data = SchemeModel.fromJsonList(response);
@@ -328,23 +318,8 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                                       "Yes",
                                       // "No",
                                     ],
-                                    dropdownDecoratorProps:
-                                        DropDownDecoratorProps(
-                                      baseStyle: const TextStyle(fontSize: 13),
-                                      dropdownSearchDecoration: InputDecoration(
-                                        enabledBorder:
-                                            reusableWidget.borderStyle(),
-                                        focusedBorder:
-                                            reusableWidget.borderStyle(),
-                                        errorBorder:
-                                            reusableWidget.errorBorderStyle(),
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
-                                        labelText: 'Availed?',
-                                        labelStyle:
-                                            reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    dropdownDecoratorProps: reusableWidget
+                                        .dropDownDecoration('Availed?'),
                                     onChanged: (val) {
                                       controller.availed.value = val.toString();
                                       controller.update();
@@ -357,21 +332,8 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                                   child: TextFormField(
                                     keyboardType: TextInputType.number,
                                     initialValue: data['amount'],
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      errorBorder:
-                                          reusableWidget.errorBorderStyle(),
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      prefixIcon:
-                                          const Icon(Icons.currency_rupee),
-                                      label: Text(
-                                        'Amount',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    decoration: reusableWidget
+                                        .textBoxDecoration('Amount'),
                                     style: const TextStyle(fontSize: 13),
                                     onChanged: (value) {
                                       data['amount'] = value;
@@ -416,89 +378,48 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                             ? Column(
                                 children: [
                                   TextFormField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      label: Text(
-                                        'KCC Card Number *',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    controller:
+                                        controller.kccCardNumberTextController,
+                                    decoration: reusableWidget
+                                        .textBoxDecoration('KCC Card Number *'),
                                   ),
                                   reusableWidget.textBoxSpace(),
                                   TextFormField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      label: Text(
-                                        'KCC Renew or New',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    controller:
+                                        controller.kccRenewTextController,
+                                    decoration: reusableWidget
+                                        .textBoxDecoration('KCC Renew or New'),
                                   ),
                                   reusableWidget.textBoxSpace(),
                                   TextFormField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      label: Text(
-                                        'Bank Name',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    controller:
+                                        controller.kccBankNameTextController,
+                                    decoration: reusableWidget
+                                        .textBoxDecoration('Bank Name'),
                                   ),
                                   reusableWidget.textBoxSpace(),
                                   TextFormField(
                                     controller:
                                         controller.kccBranchTextController,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      label: Text(
-                                        'Branch Name',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    decoration: reusableWidget
+                                        .textBoxDecoration('Branch Name'),
                                   ),
                                   reusableWidget.textBoxSpace(),
                                   TextFormField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      label: Text(
-                                        'Year of Sanctioned',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    controller: controller
+                                        .kccYearOfSanctionedTextController,
+                                    decoration:
+                                        reusableWidget.textBoxDecoration(
+                                            'Year of Sanctioned'),
                                   ),
                                   reusableWidget.textBoxSpace(),
                                   TextFormField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      enabledBorder:
-                                          reusableWidget.borderStyle(),
-                                      focusedBorder:
-                                          reusableWidget.borderStyle(),
-                                      label: Text(
-                                        'Sanctioned Amount in (Rs)',
-                                        style: reusableWidget.textBoxTextSyle(),
-                                      ),
-                                    ),
+                                    keyboardType: TextInputType.number,
+                                    controller: controller
+                                        .kccSanctionedAmountTextController,
+                                    decoration:
+                                        reusableWidget.textBoxDecoration(
+                                            'Sanctioned Amount in (Rs)'),
                                   ),
                                 ],
                               )
@@ -646,37 +567,19 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                       const Text('Enumerator Details'),
                       reusableWidget.textBoxSpace(),
                       TextFormField(
-                        validator: (val) =>
-                            val != '' ? null : 'Required field *',
-                        onTap: () {
-                          controller.pickDOB(context);
-                        },
-                        controller: controller.dateTextController,
-                        readOnly: true,
-                        decoration: InputDecoration(
-                            isDense: true,
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            focusedErrorBorder:
-                                reusableWidget.errorBorderStyle(),
-                            labelText: 'Date of Data Collection',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                            suffixIcon:
-                                const Icon(Icons.calendar_today_outlined)),
-                      ),
+                          validator: (val) =>
+                              val != '' ? null : 'Required field *',
+                          onTap: () {
+                            controller.pickDOB(context);
+                          },
+                          controller: controller.dateTextController,
+                          readOnly: true,
+                          decoration: reusableWidget
+                              .textBoxDecoration('Date of Data Collection')),
                       reusableWidget.textBoxSpace(),
                       TextFormField(
                         maxLines: 4,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Remarks',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget.textBoxDecoration('Remarks'),
                       ),
                       reusableWidget.textBoxSpace(),
                       reusableWidget.textBoxSpace(),

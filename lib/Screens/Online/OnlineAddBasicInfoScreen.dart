@@ -164,18 +164,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             return null;
                           },
                           controller: controller.nameController.value,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            focusedErrorBorder:
-                                reusableWidget.errorBorderStyle(),
-                            label: Text(
-                              'Full Name',
-                              style: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          decoration:
+                              reusableWidget.textBoxDecoration('Full Name *'),
                           style: reusableWidget.textBoxTextSyle(),
                         ),
                       ),
@@ -188,16 +178,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         },
                         controller: controller.dobTextController,
                         readOnly: true,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          focusedErrorBorder: reusableWidget.errorBorderStyle(),
-                          labelText: 'Date of Birth',
-                          labelStyle: reusableWidget.textBoxTextSyle(),
-                          suffixIcon: const Icon(Icons.calendar_today_outlined),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Date of Birth *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -210,19 +192,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Caste',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              focusedErrorBorder:
-                                  reusableWidget.errorBorderStyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps:
+                              reusableWidget.dropDownDecoration('Caste *'),
                           asyncItems: (String filter) async {
                             var response = await screenServices.getAllCaste();
                             var data = CasteModel.fromJsonList(response);
@@ -244,17 +215,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              labelText: 'Gender',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps:
+                              reusableWidget.dropDownDecoration('Gender *'),
                           asyncItems: (String filter) async {
                             var response = await screenServices.getAllGender();
                             var data = GenderModel.fromJsonList(response);
@@ -281,17 +243,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             "Wife Name",
                             "Husband Name",
                           ],
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Relationship Type',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps: reusableWidget
+                              .dropDownDecoration('Relationship Type *'),
                           onChanged: (val) {
                             controller.relationshipType.value = val.toString();
                             controller.update();
@@ -307,16 +260,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.relationship,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          label: Text(
-                            'Father/Wife Husband Name',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Father/Wife Husband Name *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -330,16 +275,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         controller: controller.aadhaarTextController,
                         keyboardType: TextInputType.number,
                         maxLength: 12,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          label: Text(
-                            'Aadhaar Card',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Aadhaar Card *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -355,17 +292,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           "Physically Verified",
                           "Online Verified",
                         ],
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            labelText: 'Aadhaar Verification Type',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Aadhaar Verification Type *'),
                         onChanged: (val) {
                           controller.aadhaarVerifyType.value = val.toString();
                         },
@@ -409,16 +337,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.voterIdTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          label: Text(
-                            'Voter ID',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Voter ID *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -431,17 +351,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Farmer Category',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps: reusableWidget
+                              .dropDownDecoration('Farmer Category *'),
                           asyncItems: (String filter) async {
                             var response =
                                 await screenServices.getAllFarmerCategory();
@@ -463,16 +374,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.qualificationTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          label: Text(
-                            'Highest Qualification',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Highest Qualification *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -501,15 +404,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         return controller.isFarmingMainIncome.value == 'No'
                             ? TextFormField(
                                 controller: controller.occupationTextController,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  enabledBorder: reusableWidget.borderStyle(),
-                                  focusedBorder: reusableWidget.borderStyle(),
-                                  label: Text(
-                                    'Other Income',
-                                    style: reusableWidget.textBoxTextSyle(),
-                                  ),
-                                ),
+                                decoration: reusableWidget
+                                    .textBoxDecoration('Other Income'),
                                 style: reusableWidget.textBoxTextSyle(),
                               )
                             : Container();
@@ -526,17 +422,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Select District',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps: reusableWidget
+                              .dropDownDecoration('Select District *'),
                           asyncItems: (String filter) async {
                             var districtId =
                                 await storage.read(key: 'district_id');
@@ -562,17 +449,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Sub Division',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps: reusableWidget
+                              .dropDownDecoration('Sub Division *'),
                           asyncItems: (String filter) async {
                             var response = await screenServices.getSubDivision(
                                 int.parse(controller
@@ -596,17 +474,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'RD Block',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps:
+                              reusableWidget.dropDownDecoration('RD Block *'),
                           asyncItems: (String filter) async {
                             var response = await basicInfoServices.getRdBlock(
                                 controller.districtIdForBlock.value);
@@ -630,17 +499,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                             }
                             return null;
                           },
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Village/Locality',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps: reusableWidget
+                              .dropDownDecoration('Village/Locality *'),
                           asyncItems: (String filter) async {
                             var response = await basicInfoServices
                                 .getVillage(controller.blockIdForVillage.value);
@@ -664,16 +524,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.bankNameTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Bank Name',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Bank Name *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -686,16 +538,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                         },
                         controller: controller.accountNumberTextController,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Account Number',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Account Number *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -707,16 +551,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.branchNameTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Branch Name',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Branch Name *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -728,16 +564,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.ifscTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'IFSC  Code',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('IFSC  Code *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),

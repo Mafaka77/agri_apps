@@ -166,16 +166,7 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                     reusableWidget.textBoxSpace(),
                     TextFormField(
                       controller: controller.ownerID,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Owner ID',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration: reusableWidget.textBoxDecoration('Owner ID'),
                       style: const TextStyle(fontSize: 13),
                     ),
                     reusableWidget.textBoxSpace(),
@@ -187,16 +178,8 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                         return null;
                       },
                       controller: controller.location,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Location *',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration:
+                          reusableWidget.textBoxDecoration('Location *'),
                       style: const TextStyle(fontSize: 13),
                     ),
                     reusableWidget.textBoxSpace(),
@@ -208,17 +191,8 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                         return null;
                       },
                       selectedItems: controller.cropsGrownData,
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        baseStyle: reusableWidget.textBoxTextSyle(),
-                        dropdownSearchDecoration: InputDecoration(
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          contentPadding: const EdgeInsets.all(10),
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          labelText: 'Crops Grown *',
-                          labelStyle: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      dropdownDecoratorProps:
+                          reusableWidget.dropDownDecoration('Crops Grown *'),
                       asyncItems: (String filter) async {
                         var response = await services.getLandCrops();
                         var data = LandCrops.fromJsonList(response);
@@ -241,16 +215,8 @@ class OnlineAddLandWaterScreen extends StatelessWidget {
                         return null;
                       },
                       controller: controller.totalArea,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Total Area Sown *',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration:
+                          reusableWidget.textBoxDecoration('Total Area Sown *'),
                       style: const TextStyle(fontSize: 13),
                     ),
                   ]),

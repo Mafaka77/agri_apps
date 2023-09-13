@@ -159,16 +159,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                     children: [
                       TextFormField(
                         controller: controller.husbandryId,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Husbandry ID',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Husbandry ID'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -180,16 +172,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.locationText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Location *',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Location *'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -201,16 +185,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItems: controller.livestockData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Livestocks *',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Livestocks *'),
                         asyncItems: (String filter) async {
                           var response = await services.getLiveStock();
                           var data = LivestockModel.fromJsonList(response);
@@ -232,16 +208,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItems: controller.typeOfFarmData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Type of Farm *',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Type of Farm *'),
                         asyncItems: (String filter) async {
                           var response = await services.getTypeOfFarm();
                           var data = TypeOfFarmModel.fromJsonList(response);
@@ -263,16 +231,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItems: controller.typeOfBreedData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Type of Breed *',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Type of Breed *'),
                         asyncItems: (String filter) async {
                           var response = await services.getTypeOfBreed();
                           var data = TypeOfBreedModel.fromJsonList(response);
@@ -289,16 +249,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.adultMaleText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Adult Male',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Adult Male'),
                         style: const TextStyle(fontSize: 13),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -312,16 +264,7 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.adultFemaleText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Adult Female',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget.textBoxDecoration('label'),
                         style: const TextStyle(fontSize: 13),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -335,16 +278,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                       TextFormField(
                         controller: controller.youngStockText,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Youngstock',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Youngstock'),
                         style: const TextStyle(fontSize: 13),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -376,16 +311,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItems: controller.typeOfPoultryFarmData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Type of Poultry Farm *',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Type of Poultry Farm *'),
                         asyncItems: (String filter) async {
                           var response = await services.getTypeOfPoultryFarm();
                           var data =
@@ -408,16 +335,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItems: controller.typeOfPoultryBreedData,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Type of Poultry Breeds *',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Type of Poultry Breeds *'),
                         asyncItems: (String filter) async {
                           var response = await services.getTypeOfPoultryBreed();
                           var data =
@@ -435,16 +354,8 @@ class OnlineAnimalHusbandryScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.noOfPoultryText,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'No of Poultry',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('No of Poultry'),
                         style: const TextStyle(fontSize: 13),
                       ),
                       reusableWidget.textBoxSpace(),

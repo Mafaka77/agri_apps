@@ -1,10 +1,40 @@
 import 'package:agri_farmers_app/MyColors.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 
 class ReusableWidget {
+  textBoxDecoration(String label) {
+    return InputDecoration(
+      isDense: true,
+      errorBorder: errorBorderStyle(),
+      focusedErrorBorder: errorBorderStyle(),
+      enabledBorder: borderStyle(),
+      focusedBorder: borderStyle(),
+      label: Text(
+        label,
+        style: textBoxTextSyle(),
+      ),
+    );
+  }
+
+  dropDownDecoration(String label) {
+    return DropDownDecoratorProps(
+      baseStyle: textBoxTextSyle(),
+      dropdownSearchDecoration: InputDecoration(
+        errorBorder: errorBorderStyle(),
+        focusedErrorBorder: errorBorderStyle(),
+        enabledBorder: borderStyle(),
+        focusedBorder: borderStyle(),
+        contentPadding: const EdgeInsets.all(10),
+        labelText: label,
+        labelStyle: textBoxTextSyle(),
+      ),
+    );
+  }
+
   labelTextStyle() {
     return TextStyle(fontSize: 12, color: MyColors.deepGreen);
   }

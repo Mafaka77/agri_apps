@@ -46,6 +46,11 @@ class OnlineAddFarmScreen extends StatelessWidget {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: MyColors.deepGreen,
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded)),
             ),
             bottomSheet: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -190,16 +195,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.landOwnerNameTextController,
-                        decoration: InputDecoration(
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          isDense: true,
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Land Owner Name',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Land Owner Name *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -212,16 +209,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                         },
                         keyboardType: TextInputType.number,
                         controller: controller.totalFarmAreaTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Total Farm Area(In Acres)',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Total Farm Area (in Acres) *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -235,16 +224,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           },
                           keyboardType: TextInputType.number,
                           controller: controller.latitudeTextController.value,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            label: Text(
-                              'Latitude',
-                              style: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          decoration:
+                              reusableWidget.textBoxDecoration('Altitude'),
                           style: reusableWidget.textBoxTextSyle(),
                         ),
                       ),
@@ -259,16 +240,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           },
                           keyboardType: TextInputType.number,
                           controller: controller.longitudeTextController.value,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            label: Text(
-                              'Longitude',
-                              style: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          decoration:
+                              reusableWidget.textBoxDecoration('Longitude *'),
                           style: reusableWidget.textBoxTextSyle(),
                         ),
                       ),
@@ -283,16 +256,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           },
                           keyboardType: TextInputType.number,
                           controller: controller.altitudeTextController.value,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            label: Text(
-                              'Altitude',
-                              style: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          decoration:
+                              reusableWidget.textBoxDecoration('Altitude *'),
                           style: reusableWidget.textBoxTextSyle(),
                         ),
                       ),
@@ -306,17 +271,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                             return null;
                           },
                           selectedItem: controller.landHoldingData.value,
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: reusableWidget.textBoxTextSyle(),
-                            dropdownSearchDecoration: InputDecoration(
-                              errorBorder: reusableWidget.errorBorderStyle(),
-                              enabledBorder: reusableWidget.borderStyle(),
-                              focusedBorder: reusableWidget.borderStyle(),
-                              contentPadding: const EdgeInsets.all(10),
-                              labelText: 'Land Holding',
-                              labelStyle: reusableWidget.textBoxTextSyle(),
-                            ),
-                          ),
+                          dropdownDecoratorProps: reusableWidget
+                              .dropDownDecoration('Land Holding *'),
                           asyncItems: (String filter) async {
                             var response =
                                 await farmLandServices.getLandHolding();
@@ -339,17 +295,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItem: controller.districtValue.value,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Select District',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Select District *'),
                         asyncItems: (String filter) async {
                           var res = await screenServices.getAllDistrict();
                           var data = DistrictModel.fromJsonList(res);
@@ -370,17 +317,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItem: controller.subDivisionValue.value,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Sub Division',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Sub Division *'),
                         asyncItems: (String filter) async {
                           var response = await screenServices.getSubDivision(
                               controller.districtIdForSubDivision.value);
@@ -400,17 +338,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItem: controller.blockValue.value,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'RD Block',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('RD Block *'),
                         asyncItems: (String filter) async {
                           var response = await basicInfoServices
                               .getRdBlock(controller.districtIdForBlock.value);
@@ -432,17 +361,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItem: controller.villageValue.value,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Village/Locality',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Village/Locality *'),
                         asyncItems: (String filter) async {
                           var response = await basicInfoServices
                               .getVillage(controller.blockIdForVillage.value);
@@ -465,17 +385,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         selectedItem: controller.ownerTypeValue.value,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Ownership Type',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Ownership Type *'),
                         asyncItems: (String filter) async {
                           var response =
                               await farmLandServices.getOwnershipType();
@@ -496,16 +407,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           return null;
                         },
                         controller: controller.landholdingNumberTextController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          errorBorder: reusableWidget.errorBorderStyle(),
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Document Number(LSC/P.Patta/VC PASS)',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget.textBoxDecoration(
+                            'Document Number(LSC/P.Patta/VC PASS) *'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -567,9 +470,11 @@ class OnlineAddFarmScreen extends StatelessWidget {
                             isDense: true,
                             errorBorder: reusableWidget.errorBorderStyle(),
                             enabledBorder: reusableWidget.borderStyle(),
+                            focusedErrorBorder:
+                                reusableWidget.errorBorderStyle(),
                             focusedBorder: reusableWidget.borderStyle(),
                             label: Text(
-                              'Upload Document',
+                              'Upload Document *',
                               style: reusableWidget.textBoxTextSyle(),
                             ),
                           ),
@@ -683,16 +588,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                       DropdownSearch<
                           IrrigationInfrastructureModel>.multiSelection(
                         selectedItems: controller.infrastructureValue,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Irrigation Infrastructure',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Irrigation Infrastructure'),
                         asyncItems: (String filter) async {
                           var response = await farmLandServices.getIrrigation();
                           var data = IrrigationInfrastructureModel.fromJsonList(
@@ -709,16 +606,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<FarmEquipmentModel>.multiSelection(
                         selectedItems: controller.equipmentValue,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Farm Machinery/Equipments',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Farm Machinery/Equipments'),
                         asyncItems: (String filter) async {
                           var response = await farmLandServices.getEquipment();
                           var data = FarmEquipmentModel.fromJsonList(response);
@@ -736,16 +625,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<KharifCropModel>.multiSelection(
                         selectedItems: controller.kharifCropValue,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Kharif Crops',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Kharif Crops'),
                         asyncItems: (String filter) async {
                           var response =
                               await farmLandServices.getKharifCrops();
@@ -763,30 +644,15 @@ class OnlineAddFarmScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.kharifTotalArea,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Farm Area(Kharif)',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration: reusableWidget
+                            .textBoxDecoration('Farm Area(Kharif)'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
                       DropdownSearch<RabiCropModel>.multiSelection(
                         selectedItems: controller.rabiCropValue,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            labelText: 'Rabi Crops',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps:
+                            reusableWidget.dropDownDecoration('Rabi Crops'),
                         asyncItems: (String filter) async {
                           var response = await farmLandServices.getRabiCrops();
                           var data = RabiCropModel.fromJsonList(response);
@@ -803,15 +669,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.rabiTotalArea,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Farm Area(Rabi)',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Farm Area(Rabi)'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
                       reusableWidget.textBoxSpace(),
@@ -827,17 +686,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                           "Yes",
                           "No",
                         ],
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          baseStyle: reusableWidget.textBoxTextSyle(),
-                          dropdownSearchDecoration: InputDecoration(
-                            enabledBorder: reusableWidget.borderStyle(),
-                            focusedBorder: reusableWidget.borderStyle(),
-                            contentPadding: const EdgeInsets.all(10),
-                            errorBorder: reusableWidget.errorBorderStyle(),
-                            labelText: 'Oil Palm Plantation',
-                            labelStyle: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        dropdownDecoratorProps: reusableWidget
+                            .dropDownDecoration('Oil Palm Plantation'),
                         onChanged: (val) {
                           controller.oilPalmPlantation.value = val.toString();
                         },
@@ -846,15 +696,8 @@ class OnlineAddFarmScreen extends StatelessWidget {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller.oilPalmArea,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          label: Text(
-                            'Oil Palm Area',
-                            style: reusableWidget.textBoxTextSyle(),
-                          ),
-                        ),
+                        decoration:
+                            reusableWidget.textBoxDecoration('Oil Palm Area'),
                         style: reusableWidget.textBoxTextSyle(),
                       ),
 

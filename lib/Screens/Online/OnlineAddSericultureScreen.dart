@@ -154,16 +154,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                   children: [
                     TextFormField(
                       controller: controller.sericultureId,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Sericulture ID',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration:
+                          reusableWidget.textBoxDecoration('Sericulture ID'),
                       style: const TextStyle(fontSize: 13),
                     ),
                     reusableWidget.textBoxSpace(),
@@ -175,16 +167,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                         return null;
                       },
                       controller: controller.location,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Location *',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration:
+                          reusableWidget.textBoxDecoration('Location *'),
                       style: const TextStyle(fontSize: 13),
                     ),
                     reusableWidget.textBoxSpace(),
@@ -197,16 +181,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                       },
                       keyboardType: TextInputType.number,
                       controller: controller.totalArea,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Total Farm Area * ',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration: reusableWidget
+                          .textBoxDecoration('Total Farm Area * '),
                       style: const TextStyle(fontSize: 13),
                     ),
                     reusableWidget.textBoxSpace(),
@@ -219,16 +195,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                       },
                       keyboardType: TextInputType.number,
                       controller: controller.sizeOfRearingUnit,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Size of rearing unit (in sqft) *',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration: reusableWidget.textBoxDecoration(
+                          'Size of rearing unit (in sqft) *'),
                       style: const TextStyle(fontSize: 13),
                     ),
                     reusableWidget.textBoxSpace(),
@@ -240,16 +208,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                         return null;
                       },
                       selectedItems: controller.silkwormRearedData,
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        baseStyle: reusableWidget.textBoxTextSyle(),
-                        dropdownSearchDecoration: InputDecoration(
-                          enabledBorder: reusableWidget.borderStyle(),
-                          focusedBorder: reusableWidget.borderStyle(),
-                          contentPadding: const EdgeInsets.all(10),
-                          labelText: 'Silkworm Reared *',
-                          labelStyle: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      dropdownDecoratorProps: reusableWidget
+                          .dropDownDecoration('Silkworm Reared *'),
                       asyncItems: (String filter) async {
                         var response = await services.getAllSilkworm();
                         var data = SilkwormModel.fromJsonList(response);
@@ -272,16 +232,8 @@ class OnlineAddSericultureScreen extends StatelessWidget {
                       },
                       keyboardType: TextInputType.number,
                       controller: controller.plantationTotalArea,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorBorder: reusableWidget.errorBorderStyle(),
-                        enabledBorder: reusableWidget.borderStyle(),
-                        focusedBorder: reusableWidget.borderStyle(),
-                        label: Text(
-                          'Area of Silkworm feed plantation *',
-                          style: reusableWidget.textBoxTextSyle(),
-                        ),
-                      ),
+                      decoration: reusableWidget.textBoxDecoration(
+                          'Area of Silkworm feed plantation *'),
                       style: const TextStyle(fontSize: 13),
                     ),
                   ],
