@@ -26,7 +26,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
   OnlineDetailScreen({Key? key}) : super(key: key);
   var data = Get.arguments[0];
   ReusableWidget reusableWidget = ReusableWidget();
-  OnlineHomeController homeController = Get.find();
+  // OnlineHomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,9 +131,9 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: homeController.farmerAgriLandList.length,
+                    itemCount: controller.farmerAgriLandList.length,
                     itemBuilder: (c, i) {
-                      var agri = homeController.farmerAgriLandList[i];
+                      var agri = controller.farmerAgriLandList[i];
                       return ListTile(
                         onTap: () {
                           Get.lazyPut(() => FarmLandController());
@@ -629,7 +629,14 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                                           color: Colors.red,
                                         ),
                                       )
-                                    : openApprovalDialog(context);
+                                    : controller.getAllSupervisor(() {
+                                        reusableWidget.loader(context);
+                                      }, () {
+                                        Loader.hide();
+                                        openApprovalDialog(context);
+                                      }, () {
+                                        Loader.hide();
+                                      });
                           },
                           child: Card(
                             elevation: 0,
@@ -725,7 +732,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           color: Colors.blue,
                         ),
                       );
-                      homeController.getAllFarmers('');
+                      controller.getAllFarmers('');
                       Navigator.pop(context);
                       Navigator.pop(context);
                     }, () {
@@ -823,7 +830,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {
@@ -874,7 +881,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {
@@ -925,7 +932,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {
@@ -976,7 +983,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {
@@ -1027,7 +1034,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {
@@ -1078,7 +1085,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {
@@ -1129,7 +1136,7 @@ class OnlineDetailScreen extends GetView<OnlineHomeController> {
                           Icons.check,
                           color: Colors.blue,
                         ));
-                    homeController.getFarmerFarmDetails(data.id, () {}, () {
+                    controller.getFarmerFarmDetails(data.id, () {}, () {
                       Navigator.pop(context);
                     }, () {});
                   }, () {

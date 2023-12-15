@@ -51,4 +51,11 @@ class OnlineHomeScreenServices extends BaseService {
       Future.error(ex);
     }
   }
+
+  Future getAllSupervisor(int districtId) async {
+    try {
+      var response = await client.get(Routes.GET_ALL_SUPERVISOR(districtId));
+      print(response.data);
+    } catch (ex) {}
+  }
 }

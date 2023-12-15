@@ -6,6 +6,7 @@ import 'package:agri_farmers_app/Services/HomeScreenServices.dart';
 import 'package:agri_farmers_app/Widgets/OfflineDataWidget.dart';
 import 'package:agri_farmers_app/Widgets/OnlineDataWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,10 +25,11 @@ class HomeScreen extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image(
-                    height: Get.height * 0.03,
-                    image: const AssetImage(
-                      'images/agri.png',
+                  SizedBox(
+                    height: Get.height * 0.3,
+                    width: 200,
+                    child: SvgPicture.asset(
+                      'images/logo_agri.svg', // Replace with your SVG image path
                     ),
                   ),
                 ],

@@ -1,5 +1,5 @@
 class Routes {
-  static String BASE_URL = 'http://10.180.243.113:8000/api/';
+  static String BASE_URL = 'http://10.180.243.111:8000/api/';
   // static String BASE_URL = 'https://argi.stagingmsegs.in/api/';
 
   //LOGIN
@@ -27,6 +27,7 @@ class Routes {
 
   //ONLINE DATA
   static String GET_ALL_FARMERS(id) => '${BASE_URL}get-all-farmers/$id';
+  static String GET_ALL_SUPERVISOR(id) => '${BASE_URL}get-supervisor/$id';
   static String SUBMIT_FARMER_BASIC_INFO =
       '${BASE_URL}submit-farmer-basic-info';
   static String GET_FARMER(id) => '${BASE_URL}get-farmer/$id';

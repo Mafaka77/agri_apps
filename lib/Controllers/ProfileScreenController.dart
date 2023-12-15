@@ -70,6 +70,7 @@ class ProfileScreenController extends GetxController {
           data['downloadBtn']['permission_button'] == 0 ? false : true;
       isLoading.value = false;
     } catch (ex) {
+      print(ex);
       isLoading.value = false;
       ReusableWidget().rawSnackBar(
         'Error Occured',

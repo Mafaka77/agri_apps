@@ -15,6 +15,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 var storage = const FlutterSecureStorage();
 
 class OnlineHomeController extends GetxController {
+  var storage = const FlutterSecureStorage();
   OnlineHomeScreenServices services = Get.find(tag: 'onlineHomeServices');
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
@@ -145,6 +146,19 @@ class OnlineHomeController extends GetxController {
       refreshController.loadComplete();
     } catch (ex) {
       print(ex);
+    }
+  }
+
+  getAllSupervisor(
+      Function onLoading, Function onSuccess, Function onError) async {
+    var districtId = await storage.read(key: 'district_id');
+    onLoading();
+    try {
+      var response =
+          await services.getAllSupervisor(int.parse(districtId.toString()));
+      onSuccess();
+    } catch (ex) {
+      onError();
     }
   }
 }

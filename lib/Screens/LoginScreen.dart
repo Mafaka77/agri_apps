@@ -18,90 +18,117 @@ class LoginScreen extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             body: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Center(
-                    child: ExtendedImage.asset(
-                      enableMemoryCache: true,
-                      'images/login_logo.jpg',
-                      height: Get.height * 0.4,
+              child: Center(
+                child: Column(
+                  children: [
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    Image(
+                      height: Get.height * 0.2,
+                      image: const AssetImage('images/security.png'),
                     ),
-                  ),
-                  TextFormField(
-                    controller: controller.emailTextController,
-                    decoration: InputDecoration(
-                      enabledBorder: reusableWidget.borderStyle(),
-                      focusedBorder: reusableWidget.borderStyle(),
-                      label: Text(
-                        'Email',
-                        style: reusableWidget.textBoxTextSyle(),
-                      ),
-                    ),
-                  ),
-                  reusableWidget.textBoxSpace(),
-                  Obx(
-                    () => TextFormField(
-                      obscureText: controller.passwordHide.value,
-                      controller: controller.passwordTextController,
+                    // Center(
+                    //   child: ExtendedImage.asset(
+                    //     enableMemoryCache: true,
+                    //     'images/login_logo.jpg',
+                    //     height: Get.height * 0.4,
+                    //   ),
+                    // ),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    reusableWidget.textBoxSpace(),
+                    TextFormField(
+                      controller: controller.emailTextController,
                       decoration: InputDecoration(
+                        isDense: true,
                         enabledBorder: reusableWidget.borderStyle(),
                         focusedBorder: reusableWidget.borderStyle(),
                         label: Text(
-                          'Password',
+                          'Email',
                           style: reusableWidget.textBoxTextSyle(),
                         ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            controller.passwordHide.isTrue
-                                ? controller.passwordHide.value = false
-                                : controller.passwordHide.value = true;
-                            controller.update();
-                          },
-                          icon: Icon(
-                            controller.passwordHide.isTrue
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                      ),
+                    ),
+                    reusableWidget.textBoxSpace(),
+                    Obx(
+                      () => TextFormField(
+                        obscureText: controller.passwordHide.value,
+                        controller: controller.passwordTextController,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          enabledBorder: reusableWidget.borderStyle(),
+                          focusedBorder: reusableWidget.borderStyle(),
+                          label: Text(
+                            'Password',
+                            style: reusableWidget.textBoxTextSyle(),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.passwordHide.isTrue
+                                  ? controller.passwordHide.value = false
+                                  : controller.passwordHide.value = true;
+                              controller.update();
+                            },
+                            icon: Icon(
+                              controller.passwordHide.isTrue
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  reusableWidget.textBoxSpace(),
-                  MaterialButton(
-                    elevation: 0,
-                    height: 50,
-                    color: MyColors.deepGreen,
-                    minWidth: Get.width,
-                    onPressed: () {
-                      controller.login(() {
-                        reusableWidget.loader(context);
-                      }, () {
-                        Loader.hide();
-                        reusableWidget.rawSnackBar(
-                            'Welcome...',
-                            const Icon(
-                              Icons.check,
-                              color: Colors.blue,
-                            ));
-                      }, () {
-                        Loader.hide();
-                        reusableWidget.rawSnackBar(
-                            'Login failed...Try Again',
-                            const Icon(
-                              Icons.warning,
-                              color: Colors.red,
-                            ));
-                      });
-                    },
-                    child: const Text(
-                      'LOGIN',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    reusableWidget.textBoxSpace(),
+                    MaterialButton(
+                      elevation: 0,
+                      height: 50,
+                      color: MyColors.deepGreen,
+                      minWidth: Get.width,
+                      onPressed: () {
+                        controller.login(() {
+                          reusableWidget.loader(context);
+                        }, () {
+                          Loader.hide();
+                          reusableWidget.rawSnackBar(
+                              'Welcome...',
+                              const Icon(
+                                Icons.check,
+                                color: Colors.blue,
+                              ));
+                        }, () {
+                          Loader.hide();
+                          reusableWidget.rawSnackBar(
+                              'Login failed...Try Again',
+                              const Icon(
+                                Icons.warning,
+                                color: Colors.red,
+                              ));
+                        });
+                      },
+                      child: const Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

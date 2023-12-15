@@ -27,7 +27,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
         init: AdditionalScreenController(),
         builder: (controller) {
           return Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: AppBar(
               backgroundColor: MyColors.deepGreen,
               elevation: 0,
@@ -234,7 +234,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
                                     ))
                                 : const Icon(Icons.attachment_outlined),
                             label: Text(
-                              'Ration Card Image',
+                              'Upload Ration Card',
                               style: reusableWidget.textBoxTextSyle(),
                             ),
                           ),
@@ -608,11 +608,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
     controller.aadhaarCardFile = File(pickedFile!.path);
     controller.update();
     controller.uploadAadhaarCardFile(() {
-      Loader.show(context,
-          progressIndicator: const Text(
-            'Uploading.....',
-            style: TextStyle(color: Colors.black, fontSize: 14),
-          ));
+      reusableWidget.loader(context);
     }, () {
       reusableWidget.rawSnackBar(
           'Aadhaar Card Uploaded',
@@ -643,11 +639,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
       controller.aadhaarCardFile = File(result.files.first.path!);
       controller.update();
       controller.uploadAadhaarCardFile(() {
-        Loader.show(context,
-            progressIndicator: const Text(
-              'Uploading.....',
-              style: TextStyle(color: Colors.black, fontSize: 14),
-            ));
+        reusableWidget.loader(context);
       }, () {
         reusableWidget.rawSnackBar(
             'Aadhaar Card Uploaded',
@@ -679,11 +671,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
     controller.rationCardFile = File(pickedFile!.path);
     controller.update();
     controller.uploadRationCardFile(() {
-      Loader.show(context,
-          progressIndicator: const Text(
-            'Uploading.....',
-            style: TextStyle(color: Colors.black, fontSize: 14),
-          ));
+      reusableWidget.loader(context);
     }, () {
       reusableWidget.rawSnackBar(
           'Ration Card Uploaded',
@@ -717,13 +705,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
       //     result.files.first.name;
       controller.update();
       await controller.uploadRationCardFile(() {
-        Loader.show(context,
-            progressIndicator: const Text(
-              'Uploading.....',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ));
+        reusableWidget.loader(context);
       }, () {
         reusableWidget.rawSnackBar(
             'Ration Card Uploaded',
@@ -757,11 +739,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
     controller.bankPassbookFile = File(pickedFile!.path);
     controller.update();
     controller.uploadBankPassbookFile(() {
-      Loader.show(context,
-          progressIndicator: const Text(
-            'Uploading.....',
-            style: TextStyle(color: Colors.black, fontSize: 14),
-          ));
+      reusableWidget.loader(context);
     }, () {
       reusableWidget.rawSnackBar(
           'Aadhaar Card Uploaded',
@@ -792,11 +770,7 @@ class OnlineAddAdditionalScreen extends StatelessWidget {
       controller.bankPassbookFile = File(result.files.first.path!);
       controller.update();
       controller.uploadAadhaarCardFile(() {
-        Loader.show(context,
-            progressIndicator: const Text(
-              'Uploading.....',
-              style: TextStyle(color: Colors.black, fontSize: 14),
-            ));
+        reusableWidget.loader(context);
       }, () {
         reusableWidget.rawSnackBar(
             'Aadhaar Card Uploaded',

@@ -34,6 +34,10 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
+                title: const Text(
+                  'Basic Information',
+                  style: TextStyle(fontSize: 14),
+                ),
                 elevation: 0,
                 leading: IconButton(
                   icon: const Icon(
@@ -509,6 +513,8 @@ class OnlineAddBasicInfoScreen extends StatelessWidget {
                           },
                           onChanged: (data) {
                             controller.villageID.value = data!.id;
+                            controller.villageLGDCode.value =
+                                data.village_lgd_code;
                             controller.update();
                           },
                         ),

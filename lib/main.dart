@@ -1,3 +1,4 @@
+import 'package:agri_farmers_app/Screens/SplashScreen.dart';
 import 'package:agri_farmers_app/Services/AdditionalScreenServices.dart';
 import 'package:agri_farmers_app/Services/AnimalHusbandryServices.dart';
 import 'package:agri_farmers_app/Services/BasicInfoServices.dart';
@@ -57,18 +58,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Agriculture',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        primarySwatch: Colors.blue,
-      ),
-      home: myStorage != null
-          ? HomeScreen()
-          : !permission.isGranted
-              ? ResourceScreen()
-              : LoginScreen(),
-      // home: ResourceScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Agriculture',
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+          primarySwatch: Colors.blue,
+        ),
+        // home: myStorage != null
+        //     ? HomeScreen()
+        //     : !permission.isGranted
+        //         ? ResourceScreen()
+        //         : LoginScreen(),
+        home: const SplashScreen());
   }
 }

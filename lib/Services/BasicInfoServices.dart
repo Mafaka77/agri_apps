@@ -54,11 +54,12 @@ class BasicInfoServices extends BaseService {
   }
 
   //ONLINE
-  submitBasicInfo(Object farmer) async {
+  submitBasicInfo(Object farmer, FarmerBankDetailModel bankDetailModel) async {
     try {
-      var response =
-          await client.post(Routes.SUBMIT_FARMER_BASIC_INFO, data: farmer);
-      print(response.statusCode);
+      var response = await client.post(Routes.SUBMIT_FARMER_BASIC_INFO, data: {
+        'farmer': farmer,
+        'bank': bankDetailModel.toMap(),
+      });
       return response.statusCode;
     } catch (ex) {
       return Future.error(ex);

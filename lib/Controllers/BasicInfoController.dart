@@ -55,6 +55,7 @@ class BasicInfoController extends GetxController {
   var subDivisionValue = Rxn<SubDivisionModel>();
   var rdBlockValue = Rxn<RdBlockModel>();
   var villageValue = Rxn<VillageModel>();
+  var villageLGDCode = ''.obs;
   //LIST OF DATAS
   var allGenderList = <GenderModel>[].obs;
   var districtIdForSubDivision = 0.obs;
@@ -152,18 +153,19 @@ class BasicInfoController extends GetxController {
     family.user_id = int.parse(userId.toString());
     family.block_id = rdBlockID.value;
     family.village_id = villageID.value;
-    family.state_lgd_code = '123';
-    family.village_lgd_code = '1234';
+    family.state_lgd_code = '15';
+    family.village_lgd_code = villageLGDCode.value;
     family.status = 'Incomplete';
-    family.bank_name = bankNameTextController.text;
-    family.account_number = accountNumberTextController.text;
-    family.branch_name = branchNameTextController.text;
-    family.ifsc_code = ifscTextController.text;
+    var bank = FarmerBankDetailModel();
+    bank.bank_name = bankNameTextController.text;
+    bank.account_number = accountNumberTextController.text;
+    bank.branch_name = branchNameTextController.text;
+    bank.ifsc_code = ifscTextController.text;
     try {
-      var data = await services.submitBasicInfo(family.toMap());
+      var data = await services.submitBasicInfo(family.toMap(), bank);
       onSuccess();
     } catch (ex) {
-      print(ex);
+      debugPrint(ex.toString());
       onError();
     }
   }
@@ -205,7 +207,6 @@ class BasicInfoController extends GetxController {
       occupationTextController.text = data.other_income!;
       onSuccess();
     } catch (ex) {
-      print(ex);
       onError();
     }
   }
